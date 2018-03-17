@@ -91,7 +91,7 @@ public class Entradas extends javax.swing.JFrame {
 
         jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/save.png"))); // NOI18N
 
-        jLabel9.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel9.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel9.setText("Sellos");
 
         jComboBox1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
@@ -166,7 +166,7 @@ public class Entradas extends javax.swing.JFrame {
                                 .addComponent(jLabel2)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 68, Short.MAX_VALUE))))))
+                                .addGap(0, 61, Short.MAX_VALUE))))))
             .addComponent(jScrollPane1)
         );
         jPanel1Layout.setVerticalGroup(
