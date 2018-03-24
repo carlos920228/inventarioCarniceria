@@ -17,12 +17,13 @@ public class mUsuarios {
     conexion.conectar();
     try{
     Statement sql= conexion.getConexion().createStatement();
-    sql.executeUpdate("Insert into usuario (nombre, usuario, contra, dir, tel, rol) values('Carlos','carlos','rocc','reforma','656546','dfg')");
+    sql.executeUpdate("Insert into usuario (nombre, usuario, contra, dir, tel, rol) "
+            + "values('"+datos.get(0).toString()+"','"+datos.get(1).toString()+"','"+datos.get(2).toString()+
+            "','"+datos.get(3).toString()+"','"+datos.get(4).toString()+"','"+datos.get(5).toString()+"')");
     conexion.getConexion().close();
     return true;
             }catch(Exception e){
         System.out.println("Error al insertar Usuario: "+e);
-        
         return false;
     }
     }
