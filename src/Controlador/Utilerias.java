@@ -11,7 +11,7 @@ package Controlador;
  */
 public class Utilerias {
    public String fecha(){
-   java.text.SimpleDateFormat fecha = new java.text.SimpleDateFormat("dd/MM/yyyy");
+   java.text.SimpleDateFormat fecha = new java.text.SimpleDateFormat("yyyy-MM-dd");
    java.util.Date date = new java.util.Date();
    return fecha.format(date);
    

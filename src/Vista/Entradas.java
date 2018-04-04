@@ -9,7 +9,9 @@ import Controlador.Utilerias;
 import java.util.ArrayList;
 import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import modelo.mEntradas;
 import modelo.mProductos;
 
 /**
@@ -113,6 +115,11 @@ public class Entradas extends javax.swing.JFrame {
         });
 
         jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/save.png"))); // NOI18N
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jLabel9.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel9.setText("Sellos");
@@ -271,6 +278,10 @@ public class Entradas extends javax.swing.JFrame {
             numRow++;
         }
     }//GEN-LAST:event_jComboBox2KeyTyped
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        insert();
+    }//GEN-LAST:event_jButton2ActionPerformed
     private void loadProductList() {
         DefaultComboBoxModel mCombo = new DefaultComboBoxModel();
         jComboBox2.setModel(mCombo);
@@ -306,7 +317,25 @@ public class Entradas extends javax.swing.JFrame {
         this.jLabel7.setText(Float.toString(total));
         this.jLabel6.setText(Float.toString(merma));
     }
-
+    private void insert(){
+    ArrayList<String> data=new ArrayList();
+    data.add(jTextField4.getText());
+    data.add(jTextField2.getText());
+    data.add(jTextField5.getText());
+    data.add(jLabel7.getText());
+    data.add(jLabel6.getText());
+    data.add(jTextField3.getText());
+    if(new mEntradas().insertBuy(data)){
+    JOptionPane.showMessageDialog(null,"Compra guardada");
+    reiniciar();
+    }else{
+   JOptionPane.showMessageDialog(null,"Error, contactar a sistemas");
+    }
+    }
+    private void reiniciar(){
+      initComponents();
+      
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
