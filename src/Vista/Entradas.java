@@ -17,18 +17,25 @@ import modelo.mProductos;
  * @author softlution
  */
 public class Entradas extends javax.swing.JFrame {
-DefaultTableModel table;
-int numRow;
+
+    DefaultTableModel table;
+    int numRow;
+
     public Entradas() {
         initComponents();
         setTitle("Entradas a inventario");
         loadProductList();
         setVisible(true);
         jTextField2.setText(new Utilerias().fecha());
-        table=(DefaultTableModel)jTable1.getModel();
-        numRow=1;
+        table = (DefaultTableModel) jTable1.getModel();
+        numRow = 1;
         jTextField1.setText(new modelo.mEntradas().folio());
         jTextField4.requestFocus();
+        this.jTable1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent e) {
+                if (Entradas.this.jTable1.getSelectedRows().length > 0) {
+                    Entradas.this.total();
+                } }});
     }
 
     @SuppressWarnings("unchecked")
@@ -68,7 +75,7 @@ int numRow;
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                true, false, true, true, true, true, true, true, true
+                false, false, true, true, true, true, true, true, true
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -258,10 +265,10 @@ int numRow;
     }//GEN-LAST:event_jTextField4ActionPerformed
 
     private void jComboBox2KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jComboBox2KeyTyped
-        char e=evt.getKeyChar();
-        if(e=='\n'){
-         table.addRow(new Object[]{numRow,jComboBox2.getSelectedItem().toString()});
-         numRow++;
+        char e = evt.getKeyChar();
+        if (e == '\n') {
+            table.addRow(new Object[]{numRow, jComboBox2.getSelectedItem().toString()});
+            numRow++;
         }
     }//GEN-LAST:event_jComboBox2KeyTyped
     private void loadProductList() {
@@ -269,12 +276,37 @@ int numRow;
         jComboBox2.setModel(mCombo);
         ArrayList products = new mProductos().productList();
         for (Object o : products) {
-        ArrayList data=(ArrayList)o;
-        Producto p=new Producto(data.get(0).toString(),data.get(1).toString());
-        mCombo.addElement(p);
+            ArrayList data = (ArrayList) o;
+            Producto p = new Producto(data.get(0).toString(), data.get(1).toString());
+            mCombo.addElement(p);
         }
     }
-  
+
+    private void modificarSubTotal() {
+        int fila = this.jTable1.getSelectedRow();
+        int cantidad = Integer.parseInt(this.table.getValueAt(fila, 2).toString());
+
+        float precio = Float.parseFloat(this.table.getValueAt(fila, 8).toString());
+        float subtotal = cantidad * precio;
+        this.table.setValueAt(Float.valueOf(subtotal), fila, 4);
+        total();
+    }
+
+    private void total() {
+        float total = 0.0F;
+        float merma=0.0F;
+        for (int i = 0; i < this.jTable1.getRowCount(); i++) {
+            if(table.getValueAt(i, 8)!=null){
+            float cantidad = Float.parseFloat(this.table.getValueAt(i, 2).toString());
+            float precio = Float.parseFloat(this.table.getValueAt(i, 8).toString());
+            float subtotal = cantidad * precio;
+            merma+=Float.parseFloat(this.table.getValueAt(i,7).toString());
+            total += subtotal;
+        }}
+        this.jLabel7.setText(Float.toString(total));
+        this.jLabel6.setText(Float.toString(merma));
+    }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
