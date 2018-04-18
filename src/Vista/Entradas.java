@@ -13,16 +13,10 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import modelo.mEntradas;
 import modelo.mProductos;
-
-/**
- *
- * @author softlution
- */
 public class Entradas extends javax.swing.JFrame {
 
     DefaultTableModel table;
     int numRow;
-
     public Entradas() {
         initComponents();
         setTitle("Entradas a inventario");
@@ -39,7 +33,6 @@ public class Entradas extends javax.swing.JFrame {
                     Entradas.this.total();
                 } }});
     }
-
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -73,11 +66,11 @@ public class Entradas extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Partida", "Producto", "K Etiqueta", "# Piezas", "Libras", "Peso Bascula", "Peso muerto", "Merma", "Costo"
+                "Partida", "Producto", "K Etiqueta", "# Piezas", "Libras", "Peso Bascula", "Peso muerto", "Merma", "Costo", "Cantida Producto"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, true, true, true, true, true, true, true
+                false, false, true, true, true, true, true, true, true, true
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -166,7 +159,7 @@ public class Entradas extends javax.swing.JFrame {
                         .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 480, Short.MAX_VALUE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -228,7 +221,7 @@ public class Entradas extends javax.swing.JFrame {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 379, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(30, 30, 30)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel8)
                             .addComponent(jLabel7))
@@ -237,8 +230,8 @@ public class Entradas extends javax.swing.JFrame {
                             .addComponent(jLabel5)
                             .addComponent(jLabel6))
                         .addContainerGap())
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 9, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGap(9, 9, 9)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jButton1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jButton2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)))))
@@ -302,7 +295,27 @@ public class Entradas extends javax.swing.JFrame {
         this.table.setValueAt(Float.valueOf(subtotal), fila, 4);
         total();
     }
-
+    private ArrayList loadData(){
+    ArrayList data=new ArrayList();
+    for (int i = 0; i < this.jTable1.getRowCount(); i++) {
+        ArrayList row= new ArrayList();
+        row.add(table.getValueAt(i, 0).toString());
+        row.add(table.getValueAt(i, 2).toString());
+        row.add(table.getValueAt(i, 3).toString());
+        row.add(table.getValueAt(i, 4).toString());
+        row.add(table.getValueAt(i, 5).toString());
+        row.add(table.getValueAt(i, 6).toString());
+        row.add(table.getValueAt(i, 7).toString());
+        row.add(table.getValueAt(i, 8).toString());
+        row.add(jTextField1.getText());
+        row.add(new Utilerias().fecha());
+        row.add(table.getValueAt(i,1).toString());
+        row.add(jTextField4.getText());
+        row.add(table.getValueAt(i, 9).toString());
+        data.add(row);
+    }
+    return data;
+    }
     private void total() {
         float total = 0.0F;
         float merma=0.0F;
@@ -325,7 +338,12 @@ public class Entradas extends javax.swing.JFrame {
     data.add(jLabel7.getText());
     data.add(jLabel6.getText());
     data.add(jTextField3.getText());
+    ArrayList rows=loadData();
     if(new mEntradas().insertBuy(data)){
+        for (Object o:rows) {
+            ArrayList row=(ArrayList)o;
+            new mEntradas().insertRowBuy(row);
+        }
     JOptionPane.showMessageDialog(null,"Compra guardada");
     reiniciar();
     }else{
@@ -333,7 +351,17 @@ public class Entradas extends javax.swing.JFrame {
     }
     }
     private void reiniciar(){
-      initComponents();
+      jTextField4.setText("");
+      jLabel7.setText("0.0");
+      jLabel6.setText("0.0");
+      jTextField5.setText("");
+      jTextField3.setText("");
+      jTextField2.setText(new Utilerias().fecha());
+      jTextField1.setText(new modelo.mEntradas().folio());
+      int a = this.table.getRowCount() - 1;
+         for (int i = a; i >= 0; i--) {
+          this.table.removeRow(i);
+      }
       
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables

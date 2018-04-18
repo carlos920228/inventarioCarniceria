@@ -1,5 +1,6 @@
 package modelo;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
@@ -35,5 +36,38 @@ public class mEntradas {
             System.out.println("Error al insertar compra: "+e);
             return false;
         }
-    }
+    } 
+    /**
+     * Metodo que inserta las partidas de las facturas, recibe un arreglo 
+     * [numPartida,kilos_eti,Pieza,Libras,pesoBascula,pesoMuerto,merma,costo,compra_id,fecha,producto,folioFactura]
+     * @param data
+     * @return 
+     */
+    public boolean insertRowBuy(ArrayList data){
+    Conexion conexion=new Conexion();
+    conexion.conectar();
+    try{
+    PreparedStatement sql = conexion.getConexion().prepareStatement("insert into partida(numPartida,kilos_eti,Pieza,Libras,pesoBascula,pesoMuerto,merma,costo,compra_id,fecha,producto,folioFactura,cantidadProducto) values(?,?,?,?,?,?,?,?,?,?,?,?,?)");
+    sql.setString(1, data.get(0).toString()); 
+    sql.setString(2, data.get(1).toString());
+    sql.setString(3, data.get(2).toString());
+    sql.setString(4, data.get(3).toString());
+    sql.setString(5, data.get(4).toString());
+    sql.setString(6, data.get(5).toString());
+    sql.setString(7, data.get(6).toString());
+    sql.setString(8, data.get(7).toString());
+    sql.setString(9, data.get(8).toString());
+    sql.setString(10, data.get(9).toString());
+    sql.setString(11, data.get(10).toString());
+    sql.setString(12, data.get(11).toString());
+    sql.setString(13, data.get(12).toString());
+    sql.execute();
+    conexion.getConexion().close();
+    return true;
+    }catch(Exception e){
+        System.out.println("Error insertRowBuy "+e);
+        return false;
+    } 
+    } 
+    
 }
