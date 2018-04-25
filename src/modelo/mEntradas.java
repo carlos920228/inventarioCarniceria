@@ -74,18 +74,70 @@ public class mEntradas {
     public ArrayList dataBuyLatest(){
     ArrayList data=buyLatest();
      ArrayList rows=new ArrayList();
+     rows.add(data);
         Conexion conexion=new Conexion();
        conexion.conectar();
         try {
             Statement sql=conexion.getConexion().createStatement();
-            ResultSet result=sql.executeQuery("SELECT * FROM partida where compra_id='"+rows.get(0).toString());
+            ResultSet result=sql.executeQuery("SELECT * FROM partida where compra_id='"+data.get(0).toString()+"'");
             while(result.next()){
-            ArrayList r=result.
+            ArrayList r=new ArrayList();
+            r.add(result.getString("producto"));
+            r.add(result.getString("numPartida"));
+            r.add(result.getString("kilos_eti"));
+            r.add(result.getString("Pieza"));
+            r.add(result.getString("Libras"));
+            r.add(result.getString("pesoBascula"));
+            r.add(result.getString("pesoMuerto"));
+            r.add(result.getString("merma"));
+            r.add(result.getString("costo"));
+            r.add(result.getString("fecha"));
+            r.add(result.getString("cantidadProducto"));
+            rows.add(r);
             }
             conexion.getConexion().close();
         } catch (Exception e) {
             System.out.println("Error al recupera última factura: "+ e);
         }
+        return rows;
+    }
+    /**
+     * Recibe el id para recuperar la factura 
+     * @param id
+     * @return 
+     */
+    public ArrayList dataBuyLatest(String id){
+    ArrayList rows=new ArrayList();
+    if(folio(id)){
+    ArrayList data=buyLatest(id);
+     rows.add(data);
+        Conexion conexion=new Conexion();
+       conexion.conectar();
+        try {
+            Statement sql=conexion.getConexion().createStatement();
+            ResultSet result=sql.executeQuery("SELECT * FROM partida where compra_id='"+id+"'");
+            while(result.next()){
+            ArrayList r=new ArrayList();
+            r.add(result.getString("producto"));
+            r.add(result.getString("numPartida"));
+            r.add(result.getString("kilos_eti"));
+            r.add(result.getString("Pieza"));
+            r.add(result.getString("Libras"));
+            r.add(result.getString("pesoBascula"));
+            r.add(result.getString("pesoMuerto"));
+            r.add(result.getString("merma"));
+            r.add(result.getString("costo"));
+            r.add(result.getString("fecha"));
+            r.add(result.getString("cantidadProducto"));
+            rows.add(r);
+            }
+            conexion.getConexion().close();
+        } catch (Exception e) {
+            System.out.println("Error al recupera última factura: "+ e);
+        }
+    }
+        return rows;
+    
     }
     private ArrayList buyLatest(){
        ArrayList data=new ArrayList();
@@ -97,14 +149,61 @@ public class mEntradas {
             result.next();
             data.add(result.getString("idcompras"));
             data.add(result.getString("folio"));
+            data.add(result.getString("sellos"));
             data.add(result.getString("fecha"));
             data.add(result.getString("proveedor"));
+            data.add(result.getString("total"));
             data.add(result.getString("MermaTotal"));
-            data.add(result.getString("sellos"));
+            
             conexion.getConexion().close();
         } catch (Exception e) {
             System.out.println("Error al recupera última factura: "+ e);
         }
       return data;
     }
+    /**
+     * Recibe el id a recuperar los datos
+     * @param id
+     * @return 
+     */
+    private ArrayList buyLatest(String id){
+       ArrayList data=new ArrayList();
+        Conexion conexion=new Conexion();
+       conexion.conectar();
+        try {
+            Statement sql=conexion.getConexion().createStatement();
+            ResultSet result=sql.executeQuery("SELECT * FROM compra where idcompras='"+id+"'");
+            result.next();
+            data.add(result.getString("idcompras"));
+            data.add(result.getString("folio"));
+            data.add(result.getString("sellos"));
+            data.add(result.getString("fecha"));
+            data.add(result.getString("proveedor"));
+            data.add(result.getString("total"));
+            data.add(result.getString("MermaTotal"));
+            
+            conexion.getConexion().close();
+        } catch (Exception e) {
+            System.out.println("Error al recupera última factura: "+ e);
+        }
+      return data;
+    }
+    /**
+     * Verifica si existe el folio solicitado
+     * 
+     * @return 
+     */
+    private boolean folio(String id){
+    Conexion conexion=new Conexion();
+       conexion.conectar();
+        try {
+            Statement sql=conexion.getConexion().createStatement();
+            ResultSet result=sql.executeQuery("SELECT idcompras FROM compra where idcompras='"+id+"'");
+            return result.next();
+        }catch(Exception e){
+            System.out.println("Error al buscar el folio: "+e);
+            return false;
+        }
+    }
+    
 }
