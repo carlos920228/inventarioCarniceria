@@ -3,6 +3,7 @@ package modelo;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 
 public class mProductos {
 public boolean agregarProducto(ArrayList datos){
@@ -41,5 +42,26 @@ ArrayList<ArrayList> data=new ArrayList();
         System.out.println("Error consult productList "+e);
     }
     return data;
+}
+/**
+ * Método que acualiza la existencia de un producto, recibe la cantidad y la descripción del producto
+ * @param sum
+ * @param des
+ * @return 
+ */
+
+public boolean updateExistence(String sum,String des){
+Conexion conexion=new Conexion();
+conexion.conectar();
+    try {
+        Statement sql=conexion.getConexion().createStatement();
+        System.out.println(des);
+        sql.executeUpdate("update Productos set exitencia=exitencia+"+sum+" where descripcion='"+des+"'");
+        conexion.getConexion().close();
+        return true;
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(null,"Erro al afectar existencias,enviar foto a sistemas: "+e);
+        return false;
+    }
 }
 }

@@ -61,6 +61,7 @@ public class Entradas extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        jTable1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -267,13 +268,18 @@ public class Entradas extends javax.swing.JFrame {
     private void jComboBox2KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jComboBox2KeyTyped
         char e = evt.getKeyChar();
         if (e == '\n') {
+            jTable1.setRowHeight(36);
             table.addRow(new Object[]{numRow, jComboBox2.getSelectedItem().toString()});
             numRow++;
         }
     }//GEN-LAST:event_jComboBox2KeyTyped
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        insert();
+        if(!jLabel7.getText().equals("0.0")){
+        insert();}else{
+            JOptionPane.showMessageDialog(null,"No se puede guardar una factura en ceros");
+        }
+            
     }//GEN-LAST:event_jButton2ActionPerformed
     private void loadProductList() {
         DefaultComboBoxModel mCombo = new DefaultComboBoxModel();

@@ -16,9 +16,7 @@ public class Conexion {
         
         try{
             Class.forName(driver);
-            conexion=DriverManager.getConnection(cadena,"carlosRC","rocc920228");
-            System.out.println("Conexion realizada");
-            
+            conexion=DriverManager.getConnection(cadena,"carlosRC","rocc920228");            
         }catch(ClassNotFoundException e1){
             System.out.println("Error en los drivers");
             System.out.println(e1);

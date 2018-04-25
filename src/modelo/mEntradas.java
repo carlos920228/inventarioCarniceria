@@ -63,6 +63,7 @@ public class mEntradas {
     sql.setString(13, data.get(12).toString());
     sql.execute();
     conexion.getConexion().close();
+    new mProductos().updateExistence(data.get(12).toString(), data.get(10).toString());
     return true;
     }catch(Exception e){
         System.out.println("Error insertRowBuy "+e);
@@ -70,4 +71,40 @@ public class mEntradas {
     } 
     } 
     
+    public ArrayList dataBuyLatest(){
+    ArrayList data=buyLatest();
+     ArrayList rows=new ArrayList();
+        Conexion conexion=new Conexion();
+       conexion.conectar();
+        try {
+            Statement sql=conexion.getConexion().createStatement();
+            ResultSet result=sql.executeQuery("SELECT * FROM partida where compra_id='"+rows.get(0).toString());
+            while(result.next()){
+            ArrayList r=result.
+            }
+            conexion.getConexion().close();
+        } catch (Exception e) {
+            System.out.println("Error al recupera última factura: "+ e);
+        }
+    }
+    private ArrayList buyLatest(){
+       ArrayList data=new ArrayList();
+        Conexion conexion=new Conexion();
+       conexion.conectar();
+        try {
+            Statement sql=conexion.getConexion().createStatement();
+            ResultSet result=sql.executeQuery("SELECT * FROM compra ORDER by idcompras desc LIMIT 1");
+            result.next();
+            data.add(result.getString("idcompras"));
+            data.add(result.getString("folio"));
+            data.add(result.getString("fecha"));
+            data.add(result.getString("proveedor"));
+            data.add(result.getString("MermaTotal"));
+            data.add(result.getString("sellos"));
+            conexion.getConexion().close();
+        } catch (Exception e) {
+            System.out.println("Error al recupera última factura: "+ e);
+        }
+      return data;
+    }
 }
