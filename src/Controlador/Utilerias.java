@@ -16,4 +16,7 @@ public class Utilerias {
    return fecha.format(date);
    
    }
+public String usuario(){
+return "Admin";
+}
 }

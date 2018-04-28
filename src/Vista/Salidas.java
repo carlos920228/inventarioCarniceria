@@ -1,11 +1,57 @@
 package Vista;
+
+import java.util.ArrayList;
+import javax.swing.DefaultComboBoxModel;
+import modelo.mProductos;
+import modelo.mRepartidor;
+import modelo.mSucursal;
+
 public class Salidas extends javax.swing.JFrame {
 
     public Salidas() {
         initComponents();
         setTitle("Salidas");
+        jTextField1.setText(new Controlador.Utilerias().fecha());
+        loadProductList();
+        destinos();
+        chofer();
+        jLabel7.setText(new Controlador.Utilerias().usuario());
         setVisible(true);
-        
+
+    }
+
+    private void destinos() {
+        DefaultComboBoxModel mCombo = new DefaultComboBoxModel();
+        jComboBox1.setModel(mCombo);
+        ArrayList sucursales = new mSucursal().sucursales();
+        for (Object o : sucursales) {
+            ArrayList data = (ArrayList) o;
+            Producto p = new Producto(data.get(0).toString(), data.get(1).toString());
+            mCombo.addElement(p);
+        }
+    }
+
+    private void chofer() {
+     DefaultComboBoxModel mCombo = new DefaultComboBoxModel();
+        jComboBox3.setModel(mCombo);
+        jComboBox2.setModel(mCombo);
+        ArrayList repartidor = new mRepartidor().listRepartidores();
+        for (Object o : repartidor) {
+            ArrayList data = (ArrayList) o;
+            Producto p = new Producto(data.get(0).toString(), data.get(1).toString());
+            mCombo.addElement(p);   
+    }}
+
+
+    private void loadProductList() {
+        DefaultComboBoxModel mCombo = new DefaultComboBoxModel();
+        jComboBox4.setModel(mCombo);
+        ArrayList products = new mProductos().productList();
+        for (Object o : products) {
+            ArrayList data = (ArrayList) o;
+            Producto p = new Producto(data.get(0).toString(), data.get(1).toString());
+            mCombo.addElement(p);
+        }
     }
 
     @SuppressWarnings("unchecked")
@@ -52,6 +98,7 @@ public class Salidas extends javax.swing.JFrame {
         jLabel5.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel5.setText("Productos");
 
+        jTextField1.setEditable(false);
         jTextField1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jTextField1.setText("jTextField1");
 
