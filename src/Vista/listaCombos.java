@@ -1,12 +1,34 @@
-
 package Vista;
+
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import modelo.mEntradas;
 
 public class listaCombos extends javax.swing.JFrame {
 
-    public listaCombos() {
+    DefaultTableModel table;
+    ArrayList data,prods;
+    public listaCombos(ArrayList data, ArrayList prods) {
+        this.data=data;
+        this.prods=prods;
         initComponents();
         setVisible(true);
+        table = (DefaultTableModel) jTable1.getModel();
         setTitle("Inventario Combos");
+        loadCombos();
+    }
+
+    private void loadCombos() {
+        ArrayList data = new mEntradas().exisCombo();
+        if (!data.isEmpty()) {
+            for (Object x : data) {
+                ArrayList row=(ArrayList)x;
+                table.addRow(row.toArray());
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "No hay existencia de combos");
+        }
     }
 
     @SuppressWarnings("unchecked")
@@ -27,14 +49,14 @@ public class listaCombos extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Enviar", "id", "Partida", "K Etiqueta", "# Piezas", "Peso Bascula", "Peso muerto", "Merma", "Costo", "Fecha", "Factura"
+                "Enviar", "id", "Partida", "K Etiqueta", "# Piezas", "Merma", "Costo", "Fecha", "Factura"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Boolean.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
+                java.lang.Boolean.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class
             };
             boolean[] canEdit = new boolean [] {
-                true, false, true, false, false, false, false, false, false, false, false
+                true, false, true, false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {

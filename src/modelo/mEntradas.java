@@ -205,5 +205,56 @@ public class mEntradas {
             return false;
         }
     }
-    
+    /**
+     * Método que devuelve los combos que se encuentran en inventario
+     * id,partida,ketiqueta,#piezas, Merma, Costo,Fecha, Factura
+     * @return ArrayList
+     */
+    public ArrayList exisCombo(){
+    ArrayList combos=new ArrayList();
+    Conexion conexion=new Conexion();
+       conexion.conectar();
+        try {
+            Statement sql=conexion.getConexion().createStatement();
+            ResultSet result=sql.executeQuery("SELECT * FROM partida where producto='Combo' and estado<>'1'");
+            while(result.next()){
+            ArrayList r=new ArrayList();
+            r.add(false);
+            r.add(result.getString("idpartida"));
+            r.add(result.getString("numPartida"));
+            r.add(result.getString("kilos_eti"));
+            r.add(result.getString("Pieza"));
+            r.add(result.getString("merma"));
+            r.add(result.getString("costo"));
+            r.add(result.getString("fecha"));
+            r.add(result.getString("folioFactura"));
+            combos.add(r);
+            }
+            conexion.getConexion().close();
+        } catch (Exception e) {
+            System.out.println("Error al recupera última factura: "+ e);
+        }
+    return combos;
+    }
+    /**
+     * Método que devuelve el ultimo costo de un producto, busca en las facturas
+     * @param descrip
+     * @return 
+     */
+    public String ultimoCosto(String descrip){
+    Conexion conexion=new Conexion();
+    String costo="0.0";
+    conexion.conectar();
+        try {
+            Statement sql=conexion.getConexion().createStatement();
+            ResultSet result=sql.executeQuery("SELECT costo FROM partida where producto='"+descrip+"' order by fecha desc limit 1");
+            while(result.next()){
+            costo=result.getString("costo");
+            return costo;
+            }
+        } catch (Exception e) {
+            System.out.println("Error al recuperar el ultimo precio");
+        }
+        return costo;
+    }
 }
