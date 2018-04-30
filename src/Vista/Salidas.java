@@ -11,6 +11,7 @@ import modelo.mSucursal;
 
 public class Salidas extends javax.swing.JFrame {
 DefaultTableModel table;
+ArrayList combos;
     public Salidas() {
         initComponents();
         setTitle("Salidas");
@@ -23,6 +24,30 @@ DefaultTableModel table;
         setVisible(true);
 
     }
+    /**
+     * Constructor para llamar desde listaCombos
+     * @param tabla
+     * @param datos
+     * @param Combos 
+     */
+    public Salidas(ArrayList tabla, ArrayList datos, ArrayList combos) {
+        initComponents();
+        setTitle("Salidas");
+        jTextField1.setText(new Controlador.Utilerias().fecha());
+        loadProductList();
+        destinos();
+        chofer();
+        table=(DefaultTableModel)jTable1.getModel();
+        jLabel7.setText(new Controlador.Utilerias().usuario());
+        setVisible(true);
+        loadTable(tabla);
+        loadTable(combos);
+        jComboBox1.setSelectedIndex((int)datos.get(0));
+        jComboBox3.setSelectedIndex((int)datos.get(1));
+        jComboBox2.setSelectedIndex((int)datos.get(2));
+        this.combos=combos;
+
+    }
  private ArrayList loadData(){
     ArrayList data=new ArrayList();
     for (int i = 0; i < this.jTable1.getRowCount(); i++) {
@@ -33,12 +58,10 @@ DefaultTableModel table;
         row.add(table.getValueAt(i, 4).toString());
         row.add(table.getValueAt(i, 5).toString());
         row.add(table.getValueAt(i, 6).toString());
-        row.add(table.getValueAt(i, 7).toString());
-        row.add(table.getValueAt(i, 8).toString());
         data.add(row);
     }
     return data;
-    }{}
+    }
  private ArrayList data(){
  ArrayList data=new ArrayList();
  data.add(jComboBox1.getSelectedIndex());
@@ -165,6 +188,11 @@ DefaultTableModel table;
         jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/Bote_de_basura_1.png"))); // NOI18N
 
         jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/save.png"))); // NOI18N
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
 
         jLabel8.setFont(new java.awt.Font("Tahoma", 1, 48)); // NOI18N
         jLabel8.setText("TOTAL");
@@ -288,6 +316,15 @@ DefaultTableModel table;
         }
     }//GEN-LAST:event_jComboBox4KeyTyped
 
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        
+    }//GEN-LAST:event_jButton4ActionPerformed
+    private void loadTable(ArrayList da){
+    for(Object o:da){
+    ArrayList r=(ArrayList)o;
+    table.addRow(r.toArray());
+    }
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;

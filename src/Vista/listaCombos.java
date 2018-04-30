@@ -18,7 +18,7 @@ public class listaCombos extends javax.swing.JFrame {
         setTitle("Inventario Combos");
         loadCombos();
     }
-
+    
     private void loadCombos() {
         ArrayList data = new mEntradas().exisCombo();
         if (!data.isEmpty()) {
@@ -134,10 +134,27 @@ public class listaCombos extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        new Entradas();
+        new Salidas(prods,data,returnData());
         this.dispose();
     }//GEN-LAST:event_jButton3ActionPerformed
-
+    private ArrayList returnData(){
+    ArrayList data=new ArrayList();
+    for (int i = 0; i < this.jTable1.getRowCount(); i++) {
+        if((boolean)table.getValueAt(i, 0)){
+        ArrayList row= new ArrayList();
+        row.add("Combo");
+        row.add(table.getValueAt(i, 2).toString());
+        row.add(table.getValueAt(i, 3).toString());
+        row.add(table.getValueAt(i, 4).toString());
+        row.add(table.getValueAt(i, 5).toString());
+        row.add(table.getValueAt(i, 6).toString());
+        row.add("1");
+        row.add(table.getValueAt(i, 1).toString());
+        data.add(row);
+        }
+    }
+    return data;
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton3;
