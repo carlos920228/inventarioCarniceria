@@ -55,7 +55,6 @@ Conexion conexion=new Conexion();
 conexion.conectar();
     try {
         Statement sql=conexion.getConexion().createStatement();
-        System.out.println(des);
         sql.executeUpdate("update Productos set exitencia=exitencia+"+sum+" where descripcion='"+des+"'");
         conexion.getConexion().close();
         return true;

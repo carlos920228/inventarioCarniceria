@@ -10,8 +10,10 @@ import modelo.mRepartidor;
 import modelo.mSucursal;
 
 public class Salidas extends javax.swing.JFrame {
-DefaultTableModel table;
-ArrayList combos;
+
+    DefaultTableModel table;
+    ArrayList combos;//posicion 8 guarda el id del combo, modificar estado a 1 para que salga de inventario
+
     public Salidas() {
         initComponents();
         setTitle("Salidas");
@@ -19,16 +21,18 @@ ArrayList combos;
         loadProductList();
         destinos();
         chofer();
-        table=(DefaultTableModel)jTable1.getModel();
+        table = (DefaultTableModel) jTable1.getModel();
         jLabel7.setText(new Controlador.Utilerias().usuario());
         setVisible(true);
 
     }
+
     /**
      * Constructor para llamar desde listaCombos
+     *
      * @param tabla
      * @param datos
-     * @param Combos 
+     * @param Combos
      */
     public Salidas(ArrayList tabla, ArrayList datos, ArrayList combos) {
         initComponents();
@@ -37,38 +41,45 @@ ArrayList combos;
         loadProductList();
         destinos();
         chofer();
-        table=(DefaultTableModel)jTable1.getModel();
+        table = (DefaultTableModel) jTable1.getModel();
         jLabel7.setText(new Controlador.Utilerias().usuario());
         setVisible(true);
         loadTable(tabla);
         loadTable(combos);
-        jComboBox1.setSelectedIndex((int)datos.get(0));
-        jComboBox3.setSelectedIndex((int)datos.get(1));
-        jComboBox2.setSelectedIndex((int)datos.get(2));
-        this.combos=combos;
+        jComboBox1.setSelectedIndex((int) datos.get(0));
+        jComboBox3.setSelectedIndex((int) datos.get(1));
+        jComboBox2.setSelectedIndex((int) datos.get(2));
+        this.combos = combos;
 
     }
- private ArrayList loadData(){
-    ArrayList data=new ArrayList();
-    for (int i = 0; i < this.jTable1.getRowCount(); i++) {
-        ArrayList row= new ArrayList();
-        row.add(table.getValueAt(i, 0).toString());
-        row.add(table.getValueAt(i, 2).toString());
-        row.add(table.getValueAt(i, 3).toString());
-        row.add(table.getValueAt(i, 4).toString());
-        row.add(table.getValueAt(i, 5).toString());
-        row.add(table.getValueAt(i, 6).toString());
-        data.add(row);
+/**
+ * Método que devuelve el contenido de la tabla
+ * @return 
+ */
+    private ArrayList loadData() {
+        ArrayList data = new ArrayList();
+        for (int i = 0; i < this.jTable1.getRowCount(); i++) {
+            ArrayList row = new ArrayList();
+            row.add(table.getValueAt(i, 0).toString());
+            row.add(table.getValueAt(i, 1).toString());
+            row.add(table.getValueAt(i, 2).toString());
+            row.add(table.getValueAt(i, 3).toString());
+            row.add(table.getValueAt(i, 4).toString());
+            row.add(table.getValueAt(i, 5).toString());
+            row.add(table.getValueAt(i, 6).toString());
+            data.add(row);
+        }
+        return data;
     }
-    return data;
+
+    private ArrayList data() {
+        ArrayList data = new ArrayList();
+        data.add(jComboBox1.getSelectedIndex());
+        data.add(jComboBox3.getSelectedIndex());
+        data.add(jComboBox2.getSelectedIndex());
+        return data;
     }
- private ArrayList data(){
- ArrayList data=new ArrayList();
- data.add(jComboBox1.getSelectedIndex());
- data.add(jComboBox3.getSelectedIndex());
- data.add(jComboBox2.getSelectedIndex());
- return data;
- }
+
     private void destinos() {
         DefaultComboBoxModel mCombo = new DefaultComboBoxModel();
         jComboBox1.setModel(mCombo);
@@ -79,16 +90,19 @@ ArrayList combos;
             mCombo.addElement(p);
         }
     }
+
     private void chofer() {
-     DefaultComboBoxModel mCombo = new DefaultComboBoxModel();
+        DefaultComboBoxModel mCombo = new DefaultComboBoxModel();
         jComboBox3.setModel(mCombo);
         jComboBox2.setModel(mCombo);
         ArrayList repartidor = new mRepartidor().listRepartidores();
         for (Object o : repartidor) {
             ArrayList data = (ArrayList) o;
             Producto p = new Producto(data.get(0).toString(), data.get(1).toString());
-            mCombo.addElement(p);   
-    }}
+            mCombo.addElement(p);
+        }
+    }
+
     private void loadProductList() {
         DefaultComboBoxModel mCombo = new DefaultComboBoxModel();
         jComboBox4.setModel(mCombo);
@@ -98,6 +112,20 @@ ArrayList combos;
             Producto p = new Producto(data.get(0).toString(), data.get(1).toString());
             mCombo.addElement(p);
         }
+    }
+    /**
+     * Método que guarda las partidas de la transferencia
+     */
+    private void saveRowsTrf(){
+    ArrayList tab=loadData();
+    for(Object o:tab){
+    ArrayList x=(ArrayList)o;
+    if(x.get(0).toString().equals("Combo")){
+    new mProductos().updateExistence("-"+x.get(6).toString(),x.get(0).toString());
+    }else{
+    new mProductos().updateExistence("-"+x.get(6).toString(),x.get(0).toString());
+    }
+    }
     }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -304,26 +332,26 @@ ArrayList combos;
     }// </editor-fold>//GEN-END:initComponents
 
     private void jComboBox4KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jComboBox4KeyTyped
-        if(evt.getKeyChar()=='\n'){
-        Producto p=(Producto)jComboBox4.getSelectedItem();
-        if(p.getName().equals("combo")||p.getName().equals("Combo")){
-        new listaCombos(data(),loadData());
-        this.dispose();
-        }else{
-        Producto p2=(Producto)jComboBox4.getSelectedItem();
-        table.addRow(new Object[]{p2.getName(),"0","0","0","0",new mEntradas().ultimoCosto(p.getName()),"1"});
-        }
+        if (evt.getKeyChar() == '\n') {
+            Producto p = (Producto) jComboBox4.getSelectedItem();
+            if (p.getName().equals("combo") || p.getName().equals("Combo")) {
+                new listaCombos(data(), loadData());
+                this.dispose();
+            } else {
+                Producto p2 = (Producto) jComboBox4.getSelectedItem();
+                table.addRow(new Object[]{p2.getName(), "0", "0", "0", "0", new mEntradas().ultimoCosto(p.getName()), "1"});
+            }
         }
     }//GEN-LAST:event_jComboBox4KeyTyped
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        
+        saveRowsTrf();
     }//GEN-LAST:event_jButton4ActionPerformed
-    private void loadTable(ArrayList da){
-    for(Object o:da){
-    ArrayList r=(ArrayList)o;
-    table.addRow(r.toArray());
-    }
+    private void loadTable(ArrayList da) {
+        for (Object o : da) {
+            ArrayList r = (ArrayList) o;
+            table.addRow(r.toArray());
+        }
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton3;
