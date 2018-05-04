@@ -77,9 +77,20 @@ public class Salidas extends javax.swing.JFrame {
         data.add(jComboBox1.getSelectedIndex());
         data.add(jComboBox3.getSelectedIndex());
         data.add(jComboBox2.getSelectedIndex());
+        data.add(jLabel9.getText());
         return data;
     }
-
+    private ArrayList dataInsert() {
+        ArrayList data = new ArrayList();
+        Producto destino=(Producto)jComboBox1.getSelectedItem();
+        Producto chofer=(Producto)jComboBox3.getSelectedItem();
+        Producto surtio=(Producto)jComboBox2.getSelectedItem();
+        data.add(destino.getName());
+        data.add(chofer.getName());
+        data.add(surtio.getName());
+        data.add(jLabel9.getText());
+        return data;
+    }
     private void destinos() {
         DefaultComboBoxModel mCombo = new DefaultComboBoxModel();
         jComboBox1.setModel(mCombo);
@@ -93,13 +104,15 @@ public class Salidas extends javax.swing.JFrame {
 
     private void chofer() {
         DefaultComboBoxModel mCombo = new DefaultComboBoxModel();
+        DefaultComboBoxModel mCombo2= new DefaultComboBoxModel();
         jComboBox3.setModel(mCombo);
-        jComboBox2.setModel(mCombo);
+        jComboBox2.setModel(mCombo2);
         ArrayList repartidor = new mRepartidor().listRepartidores();
         for (Object o : repartidor) {
             ArrayList data = (ArrayList) o;
             Producto p = new Producto(data.get(0).toString(), data.get(1).toString());
             mCombo.addElement(p);
+            mCombo2.addElement(p);
         }
     }
 
@@ -118,6 +131,7 @@ public class Salidas extends javax.swing.JFrame {
      */
     private void saveRowsTrf(){
     ArrayList tab=loadData();
+    
     for(Object o:tab){
     ArrayList x=(ArrayList)o;
     if(x.get(0).toString().equals("Combo")){
