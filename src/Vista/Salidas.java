@@ -3,10 +3,12 @@ package Vista;
 import Controlador.Utilerias;
 import java.util.ArrayList;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import modelo.mEntradas;
 import modelo.mProductos;
 import modelo.mRepartidor;
+import modelo.mSalidas;
 import modelo.mSucursal;
 
 public class Salidas extends javax.swing.JFrame {
@@ -131,14 +133,20 @@ public class Salidas extends javax.swing.JFrame {
      */
     private void saveRowsTrf(){
     ArrayList tab=loadData();
-    
+    ArrayList info=dataInsert();
+    String id=new mSalidas().insertDeparture(info);
+    if(!id.equals("Error")){
     for(Object o:tab){
     ArrayList x=(ArrayList)o;
     if(x.get(0).toString().equals("Combo")){
+    
     new mProductos().updateExistence("-"+x.get(6).toString(),x.get(0).toString());
     }else{
     new mProductos().updateExistence("-"+x.get(6).toString(),x.get(0).toString());
     }
+    }
+    }else{
+    JOptionPane.showMessageDialog(null,"Error al registrar la venta, contactar a SISTEMAS");
     }
     }
     @SuppressWarnings("unchecked")
