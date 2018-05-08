@@ -63,4 +63,22 @@ conexion.conectar();
         return false;
     }
 }
+/**
+ * Método que modifica el estado de un combo para que no salga en la lista de combos disponibles para enviar 
+ * @param id
+ * @return 
+ */
+public boolean updateCombo(String id){
+Conexion conexion=new Conexion();
+conexion.conectar();
+    try {
+        Statement sql=conexion.getConexion().createStatement();
+        sql.executeUpdate("update partida set estado='1' where idPartida='"+id+"'");
+        conexion.getConexion().close();
+        return true;
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(null,"Erro al afectar existencias,enviar foto a sistemas: "+e);
+        return false;
+    }
+}
 }

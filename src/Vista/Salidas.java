@@ -69,6 +69,7 @@ public class Salidas extends javax.swing.JFrame {
             row.add(table.getValueAt(i, 4).toString());
             row.add(table.getValueAt(i, 5).toString());
             row.add(table.getValueAt(i, 6).toString());
+            row.add(table.getValueAt(i, 7).toString());
             data.add(row);
         }
         return data;
@@ -139,11 +140,17 @@ public class Salidas extends javax.swing.JFrame {
     for(Object o:tab){
     ArrayList x=(ArrayList)o;
     if(x.get(0).toString().equals("Combo")){
-    
+    if(new mSalidas().insertRowDeparture(x, id)){
+    new mProductos().updateExistence("-"+x.get(6).toString(),x.get(0).toString());
+    new mProductos().updateCombo(x.get(7).toString());
+    }
+    else{System.out.println("Error al insertar la partida, no se afecto la existecia");}
+    }else{
+    if(new mSalidas().insertRowDeparture(x, id)){
     new mProductos().updateExistence("-"+x.get(6).toString(),x.get(0).toString());
     }else{
-    new mProductos().updateExistence("-"+x.get(6).toString(),x.get(0).toString());
-    }
+        System.out.println("Error al insertar la partida, no se afecto la existecia");
+    }}
     }
     }else{
     JOptionPane.showMessageDialog(null,"Error al registrar la venta, contactar a SISTEMAS");
@@ -205,11 +212,11 @@ public class Salidas extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Producto", "Partida", "K Etiqueta", "# Piezas", "Merma", "Costo", "Cantidad"
+                "Producto", "Partida", "K Etiqueta", "# Piezas", "Merma", "Costo", "Cantidad", "idCombo"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, true
+                false, false, false, false, false, false, true, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -361,7 +368,7 @@ public class Salidas extends javax.swing.JFrame {
                 this.dispose();
             } else {
                 Producto p2 = (Producto) jComboBox4.getSelectedItem();
-                table.addRow(new Object[]{p2.getName(), "0", "0", "0", "0", new mEntradas().ultimoCosto(p.getName()), "1"});
+                table.addRow(new Object[]{p2.getName(), "0", "0", "0", "0", new mEntradas().ultimoCosto(p.getName()),"1","0"});
             }
         }
     }//GEN-LAST:event_jComboBox4KeyTyped
