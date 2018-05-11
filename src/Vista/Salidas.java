@@ -15,7 +15,7 @@ public class Salidas extends javax.swing.JFrame {
 
     DefaultTableModel table;
     ArrayList combos;//posicion 8 guarda el id del combo, modificar estado a 1 para que salga de inventario
-
+    int partida;
     public Salidas() {
         initComponents();
         setTitle("Salidas");
@@ -23,9 +23,15 @@ public class Salidas extends javax.swing.JFrame {
         loadProductList();
         destinos();
         chofer();
+        partida=1;
         table = (DefaultTableModel) jTable1.getModel();
         jLabel7.setText(new Controlador.Utilerias().usuario());
         setVisible(true);
+        this.jTable1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent e) {
+                if (Salidas.this.jTable1.getSelectedRows().length > 0) {
+                    Salidas.this.total();
+                } }});
 
     }
 
@@ -44,6 +50,11 @@ public class Salidas extends javax.swing.JFrame {
         destinos();
         chofer();
         table = (DefaultTableModel) jTable1.getModel();
+        this.jTable1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent e) {
+                if (Salidas.this.jTable1.getSelectedRows().length > 0) {
+                    Salidas.this.total();
+                } }});
         jLabel7.setText(new Controlador.Utilerias().usuario());
         setVisible(true);
         loadTable(tabla);
@@ -54,10 +65,12 @@ public class Salidas extends javax.swing.JFrame {
         this.combos = combos;
 
     }
-/**
- * Método que devuelve el contenido de la tabla
- * @return 
- */
+
+    /**
+     * Método que devuelve el contenido de la tabla
+     *
+     * @return
+     */
     private ArrayList loadData() {
         ArrayList data = new ArrayList();
         for (int i = 0; i < this.jTable1.getRowCount(); i++) {
@@ -83,17 +96,19 @@ public class Salidas extends javax.swing.JFrame {
         data.add(jLabel9.getText());
         return data;
     }
+
     private ArrayList dataInsert() {
         ArrayList data = new ArrayList();
-        Producto destino=(Producto)jComboBox1.getSelectedItem();
-        Producto chofer=(Producto)jComboBox3.getSelectedItem();
-        Producto surtio=(Producto)jComboBox2.getSelectedItem();
+        Producto destino = (Producto) jComboBox1.getSelectedItem();
+        Producto chofer = (Producto) jComboBox3.getSelectedItem();
+        Producto surtio = (Producto) jComboBox2.getSelectedItem();
         data.add(destino.getName());
         data.add(chofer.getName());
         data.add(surtio.getName());
         data.add(jLabel9.getText());
         return data;
     }
+
     private void destinos() {
         DefaultComboBoxModel mCombo = new DefaultComboBoxModel();
         jComboBox1.setModel(mCombo);
@@ -107,7 +122,7 @@ public class Salidas extends javax.swing.JFrame {
 
     private void chofer() {
         DefaultComboBoxModel mCombo = new DefaultComboBoxModel();
-        DefaultComboBoxModel mCombo2= new DefaultComboBoxModel();
+        DefaultComboBoxModel mCombo2 = new DefaultComboBoxModel();
         jComboBox3.setModel(mCombo);
         jComboBox2.setModel(mCombo2);
         ArrayList repartidor = new mRepartidor().listRepartidores();
@@ -129,33 +144,53 @@ public class Salidas extends javax.swing.JFrame {
             mCombo.addElement(p);
         }
     }
+
     /**
      * Método que guarda las partidas de la transferencia
      */
-    private void saveRowsTrf(){
-    ArrayList tab=loadData();
-    ArrayList info=dataInsert();
-    String id=new mSalidas().insertDeparture(info);
-    if(!id.equals("Error")){
-    for(Object o:tab){
-    ArrayList x=(ArrayList)o;
-    if(x.get(0).toString().equals("Combo")){
-    if(new mSalidas().insertRowDeparture(x, id)){
-    new mProductos().updateExistence("-"+x.get(6).toString(),x.get(0).toString());
-    new mProductos().updateCombo(x.get(7).toString());
+    private void saveRowsTrf() {
+        ArrayList tab = loadData();
+        ArrayList info = dataInsert();
+        String id = new mSalidas().insertDeparture(info);
+        if (!id.equals("Error")) {
+            int error=0;
+            for (Object o : tab) {
+                ArrayList x = (ArrayList) o;
+                if (x.get(0).toString().equals("Combo")) {
+                    if (new mSalidas().insertRowDeparture(x, id)) {
+                        new mProductos().updateExistence("-" + x.get(6).toString(), x.get(0).toString());
+                        new mProductos().updateCombo(x.get(7).toString());
+                    } else {
+                        System.out.println("Error al insertar la partida combo "+ x.get(6).toString()+" "+ x.get(0).toString()+", no se afecto la existecia");
+                        error=error+1;
+                    }
+                } else {
+                    if (new mSalidas().insertRowDeparture(x, id)) {
+                        new mProductos().updateExistence("-" + x.get(6).toString(), x.get(0).toString());
+                    } else {
+                        System.out.println("Error al insertar la partida "+ x.get(6).toString()+" "+ x.get(0).toString()+" no se afecto la existecia");
+                        error=error+1;
+                    }
+                }
+            }
+            JOptionPane.showMessageDialog(null, "Transferencia guardada con "+error+" Errores");
+            reset();
+        } else {
+            JOptionPane.showMessageDialog(null, "Error al registrar la venta, contactar a SISTEMAS");
+        }
     }
-    else{System.out.println("Error al insertar la partida, no se afecto la existecia");}
-    }else{
-    if(new mSalidas().insertRowDeparture(x, id)){
-    new mProductos().updateExistence("-"+x.get(6).toString(),x.get(0).toString());
-    }else{
-        System.out.println("Error al insertar la partida, no se afecto la existecia");
-    }}
+    
+    private void reset(){
+    jComboBox1.setSelectedIndex(0);
+    jComboBox2.setSelectedIndex(0);
+    jComboBox3.setSelectedIndex(0);
+    jComboBox4.setSelectedIndex(0);
+    int a = this.table.getRowCount() - 1;
+         for (int i = a; i >= 0; i--) {
+          this.table.removeRow(i);
+      }
     }
-    }else{
-    JOptionPane.showMessageDialog(null,"Error al registrar la venta, contactar a SISTEMAS");
-    }
-    }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -243,6 +278,11 @@ public class Salidas extends javax.swing.JFrame {
         });
 
         jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/Bote_de_basura_1.png"))); // NOI18N
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/save.png"))); // NOI18N
         jButton4.addActionListener(new java.awt.event.ActionListener() {
@@ -368,7 +408,9 @@ public class Salidas extends javax.swing.JFrame {
                 this.dispose();
             } else {
                 Producto p2 = (Producto) jComboBox4.getSelectedItem();
-                table.addRow(new Object[]{p2.getName(), "0", "0", "0", "0", new mEntradas().ultimoCosto(p.getName()),"1","0"});
+                table.addRow(new Object[]{p2.getName(),"0", "0", "0", "0", new mEntradas().ultimoCosto(p.getName()), "1", "0"});
+                total();
+                partida=partida+1;
             }
         }
     }//GEN-LAST:event_jComboBox4KeyTyped
@@ -376,11 +418,36 @@ public class Salidas extends javax.swing.JFrame {
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         saveRowsTrf();
     }//GEN-LAST:event_jButton4ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+    new Menu();
+    this.dispose();
+    }//GEN-LAST:event_jButton3ActionPerformed
     private void loadTable(ArrayList da) {
         for (Object o : da) {
             ArrayList r = (ArrayList) o;
             table.addRow(r.toArray());
+            total();
+            partida=partida+1;
         }
+    }
+    private void total() {
+        float total = 0.0F;
+        for (int i = 0; i < this.jTable1.getRowCount(); i++) {
+            if(table.getValueAt(i, 0).equals("Combo")){
+            float cantidad = Float.parseFloat(this.table.getValueAt(i,2).toString());
+            float precio = Float.parseFloat(this.table.getValueAt(i, 5).toString());
+            float subtotal = cantidad * precio;
+            total += subtotal;
+            }else{
+            if(table.getValueAt(i, 6)!=null){
+            float cantidad = Float.parseFloat(this.table.getValueAt(i, 6).toString());
+            float precio = Float.parseFloat(this.table.getValueAt(i, 5).toString());
+            float subtotal = cantidad * precio;
+            total += subtotal;
+        }}}
+        this.jLabel9.setText(Float.toString(total));
+        
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton3;
