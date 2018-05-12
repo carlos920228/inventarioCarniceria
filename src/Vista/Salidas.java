@@ -68,11 +68,11 @@ public class Salidas extends javax.swing.JFrame {
         Ticket.AddSubCabecera(Ticket.DarEspacio());
         Ticket.AddSubCabecera(Ticket.DibujarLinea(40));
         Ticket.AddSubCabecera(Ticket.DarEspacio());
-        Ticket.AddItem("CANTIDAD", " ARTICULO          ", "PRECIO   SUBTOTAL");
+        Ticket.AddSubCabecera("_________________________________________________");
         Ticket.AddItem("", "", Ticket.DarEspacio());
         for (Object x : productos) {
             ArrayList pro = (ArrayList) x;
-            Ticket.AddItem("   " + pro.get(1).toString(), pro.get(2).toString(), pro.get(3).toString() + "  " + pro.get(4).toString());
+            Ticket.AddItem("Producto " + pro.get(0).toString(),"K. Etiqueta:"+pro.get(2).toString(),"Piezas: "+pro.get(3).toString() + " Costo" + pro.get(5).toString()+ " Cantidad" + pro.get(6).toString());
             Ticket.AddItem("", "", Ticket.DarEspacio());
         }
         Ticket.AddTotal(Ticket.DibujarLinea(40), "  ");
@@ -88,14 +88,15 @@ public class Salidas extends javax.swing.JFrame {
         Ticket.AddPieLinea("   FOLIO " + folio);
         Ticket.AddPieLinea(Ticket.DarEspacio());
         Ticket.AddPieLinea(Ticket.DarEspacio());
-        Ticket.AddPieLinea("   GRACIAS POR SU PREFERENCIA");
+        Ticket.AddPieLinea("Autoriza:  _______________________________");
         Ticket.AddPieLinea(Ticket.DarEspacio());
+        Ticket.AddPieLinea("Surtio:    _______________________________");
         Ticket.AddPieLinea(Ticket.DarEspacio());
+        Ticket.AddPieLinea("REPARTIDOR:_______________________________");
         Ticket.AddPieLinea(Ticket.DarEspacio());
+        Ticket.AddPieLinea("RECIBIO:   _______________________________");
         Ticket.AddPieLinea(Ticket.DarEspacio());
         Ticket.ImprimirDocumento();
-        String cadena = ticket.cadenaObtener();
-
         this.jTextField1.requestFocus();
     }
 
@@ -211,9 +212,6 @@ public class Salidas extends javax.swing.JFrame {
         }
     }
 
-    /**
-     * Método que guarda las partidas de la transferencia
-     */
     private void saveRowsTrf() {
         ArrayList tab = loadData();
         ArrayList info = dataInsert();
@@ -239,6 +237,7 @@ public class Salidas extends javax.swing.JFrame {
                     }
                 }
             }
+            imprimirTicket(tab,id);
             JOptionPane.showMessageDialog(null, "Transferencia guardada con " + error + " Errores");
             reset();
         } else {
@@ -497,7 +496,6 @@ public class Salidas extends javax.swing.JFrame {
             partida = partida + 1;
         }
     }
-
     private void total() {
         float total = 0.0F;
         for (int i = 0; i < this.jTable1.getRowCount(); i++) {

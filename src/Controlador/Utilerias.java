@@ -35,6 +35,15 @@ return "Admin";
 public String local(){
 return "Carniceria La cabaña";
 }
+public String leerRfc(){
+return "Carniceria La cabaña";
+}
+public String telefono(){
+return "Carniceria La cabaña";
+}
+public String direccion(){
+return "Carniceria La cabaña";
+}
 public void exportarExcel(JTable t) throws IOException {
         JFileChooser chooser = new JFileChooser();
         FileNameExtensionFilter filter = new FileNameExtensionFilter("Archivos de excel", "xls");
