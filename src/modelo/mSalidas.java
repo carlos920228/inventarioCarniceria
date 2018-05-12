@@ -161,4 +161,71 @@ public class mSalidas {
         }
         return data;
     }
+
+    /**
+     *
+     * @param inicio
+     * @param fin
+     * @param estado
+     * @param sucursal
+     * @return
+     */
+    public ArrayList reporteTrf(String inicio, String fin, String estado, String sucursal) {
+        ArrayList data = new ArrayList();
+        Conexion conexion = new Conexion();
+        conexion.conectar();
+        try {
+            Statement sql = conexion.getConexion().createStatement();
+            if (estado.equals("Todos")) {
+                if (sucursal.equals("Todas")) {
+                    ResultSet resultado = sql.executeQuery("select *from salidas where fecha>=" + inicio + " and fecha<=" + fin);
+                    while (resultado.next()) {
+                        data.add(resultado.getString("folio"));
+                        data.add(resultado.getString("fecha"));
+                        data.add(resultado.getString("destino"));
+                        data.add(resultado.getString("usuario"));
+                        data.add(resultado.getString("chofer"));
+                        data.add(resultado.getString("total"));
+                        data.add(resultado.getString("recepcion"));
+                        data.add(resultado.getString("recibio"));
+                        data.add(resultado.getString("surtio"));
+                    }
+                    conexion.getConexion().close();
+                } else {
+                    ResultSet resultado = sql.executeQuery("select *from salidas where fecha>=" + inicio + " and fecha<=" + fin + " and destino='" + sucursal + "'");
+                    while (resultado.next()) {
+                        data.add(resultado.getString("folio"));
+                        data.add(resultado.getString("fecha"));
+                        data.add(resultado.getString("destino"));
+                        data.add(resultado.getString("usuario"));
+                        data.add(resultado.getString("chofer"));
+                        data.add(resultado.getString("total"));
+                        data.add(resultado.getString("recepcion"));
+                        data.add(resultado.getString("recibio"));
+                        data.add(resultado.getString("surtio"));
+                    }
+                    conexion.getConexion().close();
+
+                }
+            } else {
+                ResultSet resultado = sql.executeQuery("select *from salidas where fecha>=" + inicio + " and fecha<=" + fin + " and destino='" + sucursal + "'" + " and recepcion='" + estado);
+                while (resultado.next()) {
+                    data.add(resultado.getString("folio"));
+                    data.add(resultado.getString("fecha"));
+                    data.add(resultado.getString("destino"));
+                    data.add(resultado.getString("usuario"));
+                    data.add(resultado.getString("chofer"));
+                    data.add(resultado.getString("total"));
+                    data.add(resultado.getString("recepcion"));
+                    data.add(resultado.getString("recibio"));
+                    data.add(resultado.getString("surtio"));
+                }
+                conexion.getConexion().close();
+            }
+        } catch (Exception e) {
+            System.out.println("Error reporte TRF: " + e);
+        }
+        return data;
+    }
+
 }
