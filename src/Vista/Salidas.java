@@ -10,12 +10,14 @@ import modelo.mProductos;
 import modelo.mRepartidor;
 import modelo.mSalidas;
 import modelo.mSucursal;
+import pruebatiket.Ticket;
 
 public class Salidas extends javax.swing.JFrame {
 
     DefaultTableModel table;
     ArrayList combos;//posicion 8 guarda el id del combo, modificar estado a 1 para que salga de inventario
     int partida;
+
     public Salidas() {
         initComponents();
         setTitle("Salidas");
@@ -23,7 +25,7 @@ public class Salidas extends javax.swing.JFrame {
         loadProductList();
         destinos();
         chofer();
-        partida=1;
+        partida = 1;
         table = (DefaultTableModel) jTable1.getModel();
         jLabel7.setText(new Controlador.Utilerias().usuario());
         setVisible(true);
@@ -31,8 +33,70 @@ public class Salidas extends javax.swing.JFrame {
             public void keyReleased(java.awt.event.KeyEvent e) {
                 if (Salidas.this.jTable1.getSelectedRows().length > 0) {
                     Salidas.this.total();
-                } }});
+                }
+            }
+        });
 
+    }
+
+    private void imprimirTicket(ArrayList productos, String folio) {
+        java.util.Date date = new java.util.Date();
+        Ticket ticket = new Ticket();
+        java.text.SimpleDateFormat fecha = new java.text.SimpleDateFormat("dd/MM/yyyy");
+        java.text.SimpleDateFormat hora = new java.text.SimpleDateFormat("hh:mm:ss aa");
+        Ticket.AddCabecera(Ticket.DarEspacio());
+        Ticket.AddCabecera(new Utilerias().local());
+        Ticket.AddCabecera(Ticket.DarEspacio());
+        Ticket.AddCabecera(Ticket.DarEspacio());
+        Ticket.AddCabecera(new Utilerias().leerRfc());
+        Ticket.AddCabecera(Ticket.DarEspacio());
+        Ticket.AddCabecera(new Utilerias().telefono());
+        Ticket.AddCabecera(Ticket.DarEspacio());
+        Ticket.AddCabecera(new Utilerias().direccion());
+        Ticket.AddCabecera(Ticket.DarEspacio());
+        Ticket.AddCabecera(Ticket.DibujarLinea(40));
+        Ticket.AddCabecera(Ticket.DarEspacio());
+        Ticket.AddSubCabecera("FECHA: " + fecha.format(date) + " " + hora.format(date));
+        Ticket.AddSubCabecera(Ticket.DarEspacio());
+        Ticket.AddSubCabecera(Ticket.DibujarLinea(40));
+        Ticket.AddSubCabecera(Ticket.DarEspacio());
+        Ticket.AddSubCabecera("  REPARTIDOR: " + jComboBox3.getSelectedItem().toString());
+        Ticket.AddSubCabecera(Ticket.DarEspacio());
+        Ticket.AddSubCabecera("  SURTIO:    " + jComboBox2.getSelectedItem().toString());
+        Ticket.AddSubCabecera(Ticket.DarEspacio());
+        Ticket.AddSubCabecera("  AUTORIZO   " + new Utilerias().usuario());
+        Ticket.AddSubCabecera(Ticket.DarEspacio());
+        Ticket.AddSubCabecera(Ticket.DibujarLinea(40));
+        Ticket.AddSubCabecera(Ticket.DarEspacio());
+        Ticket.AddItem("CANTIDAD", " ARTICULO          ", "PRECIO   SUBTOTAL");
+        Ticket.AddItem("", "", Ticket.DarEspacio());
+        for (Object x : productos) {
+            ArrayList pro = (ArrayList) x;
+            Ticket.AddItem("   " + pro.get(1).toString(), pro.get(2).toString(), pro.get(3).toString() + "  " + pro.get(4).toString());
+            Ticket.AddItem("", "", Ticket.DarEspacio());
+        }
+        Ticket.AddTotal(Ticket.DibujarLinea(40), "  ");
+        Ticket.AddTotal("", Ticket.DarEspacio());
+        Ticket.AddTotal("   TOTAL             ", this.jLabel9.getText());
+        Ticket.AddTotal("", Ticket.DarEspacio());
+        Ticket.AddTotal("", Ticket.DarEspacio());
+        Ticket.AddTotal("", Ticket.DarEspacio());
+        Ticket.AddPieLinea(Ticket.DibujarLinea(40));
+        Ticket.AddPieLinea(Ticket.DarEspacio());
+        Ticket.AddPieLinea("  REGIMEN DE INCORPORACION FISCAL");
+        Ticket.AddPieLinea(Ticket.DarEspacio());
+        Ticket.AddPieLinea("   FOLIO " + folio);
+        Ticket.AddPieLinea(Ticket.DarEspacio());
+        Ticket.AddPieLinea(Ticket.DarEspacio());
+        Ticket.AddPieLinea("   GRACIAS POR SU PREFERENCIA");
+        Ticket.AddPieLinea(Ticket.DarEspacio());
+        Ticket.AddPieLinea(Ticket.DarEspacio());
+        Ticket.AddPieLinea(Ticket.DarEspacio());
+        Ticket.AddPieLinea(Ticket.DarEspacio());
+        Ticket.ImprimirDocumento();
+        String cadena = ticket.cadenaObtener();
+
+        this.jTextField1.requestFocus();
     }
 
     /**
@@ -54,7 +118,9 @@ public class Salidas extends javax.swing.JFrame {
             public void keyReleased(java.awt.event.KeyEvent e) {
                 if (Salidas.this.jTable1.getSelectedRows().length > 0) {
                     Salidas.this.total();
-                } }});
+                }
+            }
+        });
         jLabel7.setText(new Controlador.Utilerias().usuario());
         setVisible(true);
         loadTable(tabla);
@@ -153,7 +219,7 @@ public class Salidas extends javax.swing.JFrame {
         ArrayList info = dataInsert();
         String id = new mSalidas().insertDeparture(info);
         if (!id.equals("Error")) {
-            int error=0;
+            int error = 0;
             for (Object o : tab) {
                 ArrayList x = (ArrayList) o;
                 if (x.get(0).toString().equals("Combo")) {
@@ -161,34 +227,34 @@ public class Salidas extends javax.swing.JFrame {
                         new mProductos().updateExistence("-" + x.get(6).toString(), x.get(0).toString());
                         new mProductos().updateCombo(x.get(7).toString());
                     } else {
-                        System.out.println("Error al insertar la partida combo "+ x.get(6).toString()+" "+ x.get(0).toString()+", no se afecto la existecia");
-                        error=error+1;
+                        System.out.println("Error al insertar la partida combo " + x.get(6).toString() + " " + x.get(0).toString() + ", no se afecto la existecia");
+                        error = error + 1;
                     }
                 } else {
                     if (new mSalidas().insertRowDeparture(x, id)) {
                         new mProductos().updateExistence("-" + x.get(6).toString(), x.get(0).toString());
                     } else {
-                        System.out.println("Error al insertar la partida "+ x.get(6).toString()+" "+ x.get(0).toString()+" no se afecto la existecia");
-                        error=error+1;
+                        System.out.println("Error al insertar la partida " + x.get(6).toString() + " " + x.get(0).toString() + " no se afecto la existecia");
+                        error = error + 1;
                     }
                 }
             }
-            JOptionPane.showMessageDialog(null, "Transferencia guardada con "+error+" Errores");
+            JOptionPane.showMessageDialog(null, "Transferencia guardada con " + error + " Errores");
             reset();
         } else {
             JOptionPane.showMessageDialog(null, "Error al registrar la venta, contactar a SISTEMAS");
         }
     }
-    
-    private void reset(){
-    jComboBox1.setSelectedIndex(0);
-    jComboBox2.setSelectedIndex(0);
-    jComboBox3.setSelectedIndex(0);
-    jComboBox4.setSelectedIndex(0);
-    int a = this.table.getRowCount() - 1;
-         for (int i = a; i >= 0; i--) {
-          this.table.removeRow(i);
-      }
+
+    private void reset() {
+        jComboBox1.setSelectedIndex(0);
+        jComboBox2.setSelectedIndex(0);
+        jComboBox3.setSelectedIndex(0);
+        jComboBox4.setSelectedIndex(0);
+        int a = this.table.getRowCount() - 1;
+        for (int i = a; i >= 0; i--) {
+            this.table.removeRow(i);
+        }
     }
 
     @SuppressWarnings("unchecked")
@@ -408,9 +474,9 @@ public class Salidas extends javax.swing.JFrame {
                 this.dispose();
             } else {
                 Producto p2 = (Producto) jComboBox4.getSelectedItem();
-                table.addRow(new Object[]{p2.getName(),"0", "0", "0", "0", new mEntradas().ultimoCosto(p.getName()), "1", "0"});
+                table.addRow(new Object[]{p2.getName(), "0", "0", "0", "0", new mEntradas().ultimoCosto(p.getName()), "1", "0"});
                 total();
-                partida=partida+1;
+                partida = partida + 1;
             }
         }
     }//GEN-LAST:event_jComboBox4KeyTyped
@@ -420,34 +486,37 @@ public class Salidas extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-    new Menu();
-    this.dispose();
+        new Menu();
+        this.dispose();
     }//GEN-LAST:event_jButton3ActionPerformed
     private void loadTable(ArrayList da) {
         for (Object o : da) {
             ArrayList r = (ArrayList) o;
             table.addRow(r.toArray());
             total();
-            partida=partida+1;
+            partida = partida + 1;
         }
     }
+
     private void total() {
         float total = 0.0F;
         for (int i = 0; i < this.jTable1.getRowCount(); i++) {
-            if(table.getValueAt(i, 0).equals("Combo")){
-            float cantidad = Float.parseFloat(this.table.getValueAt(i,2).toString());
-            float precio = Float.parseFloat(this.table.getValueAt(i, 5).toString());
-            float subtotal = cantidad * precio;
-            total += subtotal;
-            }else{
-            if(table.getValueAt(i, 6)!=null){
-            float cantidad = Float.parseFloat(this.table.getValueAt(i, 6).toString());
-            float precio = Float.parseFloat(this.table.getValueAt(i, 5).toString());
-            float subtotal = cantidad * precio;
-            total += subtotal;
-        }}}
+            if (table.getValueAt(i, 0).equals("Combo")) {
+                float cantidad = Float.parseFloat(this.table.getValueAt(i, 2).toString());
+                float precio = Float.parseFloat(this.table.getValueAt(i, 5).toString());
+                float subtotal = cantidad * precio;
+                total += subtotal;
+            } else {
+                if (table.getValueAt(i, 6) != null) {
+                    float cantidad = Float.parseFloat(this.table.getValueAt(i, 6).toString());
+                    float precio = Float.parseFloat(this.table.getValueAt(i, 5).toString());
+                    float subtotal = cantidad * precio;
+                    total += subtotal;
+                }
+            }
+        }
         this.jLabel9.setText(Float.toString(total));
-        
+
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton3;
