@@ -36,7 +36,7 @@ public class Salidas extends javax.swing.JFrame {
                 }
             }
         });
-
+        this.setExtendedState(MAXIMIZED_BOTH);
     }
 
     private void imprimirTicket(ArrayList productos, String folio) {
@@ -66,13 +66,12 @@ public class Salidas extends javax.swing.JFrame {
         Ticket.AddSubCabecera(Ticket.DarEspacio());
         Ticket.AddSubCabecera("  AUTORIZO   " + new Utilerias().usuario());
         Ticket.AddSubCabecera(Ticket.DarEspacio());
-        Ticket.AddSubCabecera(Ticket.DibujarLinea(40));
         Ticket.AddSubCabecera(Ticket.DarEspacio());
         Ticket.AddSubCabecera("_________________________________________________");
         Ticket.AddItem("", "", Ticket.DarEspacio());
         for (Object x : productos) {
             ArrayList pro = (ArrayList) x;
-            Ticket.AddItem("Producto " + pro.get(0).toString(),"K. Etiqueta:"+pro.get(2).toString(),"Piezas: "+pro.get(3).toString() + " Costo" + pro.get(5).toString()+ " Cantidad" + pro.get(6).toString());
+            Ticket.AddItem("Producto: " + pro.get(0).toString(),"| K. Etiqueta: "+pro.get(2).toString(),"|Piezas: "+pro.get(3).toString() + " |Costo: " + pro.get(5).toString()+ " |Cantidad: " + pro.get(6).toString());
             Ticket.AddItem("", "", Ticket.DarEspacio());
         }
         Ticket.AddTotal(Ticket.DibujarLinea(40), "  ");
@@ -90,11 +89,18 @@ public class Salidas extends javax.swing.JFrame {
         Ticket.AddPieLinea(Ticket.DarEspacio());
         Ticket.AddPieLinea("Autoriza:  _______________________________");
         Ticket.AddPieLinea(Ticket.DarEspacio());
+        Ticket.AddPieLinea(Ticket.DarEspacio());
+        Ticket.AddPieLinea(Ticket.DarEspacio());
         Ticket.AddPieLinea("Surtio:    _______________________________");
+        Ticket.AddPieLinea(Ticket.DarEspacio());
+        Ticket.AddPieLinea(Ticket.DarEspacio());
         Ticket.AddPieLinea(Ticket.DarEspacio());
         Ticket.AddPieLinea("REPARTIDOR:_______________________________");
         Ticket.AddPieLinea(Ticket.DarEspacio());
+        Ticket.AddPieLinea(Ticket.DarEspacio());
+        Ticket.AddPieLinea(Ticket.DarEspacio());
         Ticket.AddPieLinea("RECIBIO:   _______________________________");
+        Ticket.AddPieLinea(Ticket.DarEspacio());
         Ticket.AddPieLinea(Ticket.DarEspacio());
         Ticket.ImprimirDocumento();
         this.jTextField1.requestFocus();
@@ -254,6 +260,7 @@ public class Salidas extends javax.swing.JFrame {
         for (int i = a; i >= 0; i--) {
             this.table.removeRow(i);
         }
+        jLabel9.setText("0.0");
     }
 
     @SuppressWarnings("unchecked")
@@ -389,26 +396,29 @@ public class Salidas extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(18, 18, 18)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel5)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jComboBox4, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(jLabel5)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(jComboBox4, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(jLabel4)
+                                        .addGap(43, 43, 43)
+                                        .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE))))
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel4)
-                                .addGap(43, 43, 43)
-                                .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 23, Short.MAX_VALUE))
+                                .addGap(97, 97, 97)
+                                .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGap(207, 207, 207)))
+                        .addGap(33, 33, 33))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(102, 102, 102)
-                        .addComponent(jLabel8)
-                        .addGap(43, 43, 43)
-                        .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addContainerGap())
+                        .addGap(310, 310, 310)
+                        .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 823, Short.MAX_VALUE))
         );

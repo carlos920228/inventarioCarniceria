@@ -15,7 +15,6 @@ public class Reporteador extends javax.swing.JFrame {
         initComponents();
         setTitle("Reporteador");
         setVisible(true);
-        
         this.setExtendedState(MAXIMIZED_BOTH);
     }
 

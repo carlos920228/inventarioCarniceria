@@ -19,6 +19,13 @@ DefaultTableModel table;
         setVisible(true);
         loadData();
     }
+     public TRF(String id) {
+        initComponents();
+        setTitle("Transferencias");
+        table = (DefaultTableModel) jTable1.getModel();
+        setVisible(true);
+        loadBuy(id);
+    }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents

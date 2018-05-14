@@ -36,13 +36,13 @@ public String local(){
 return "Carniceria La cabaña";
 }
 public String leerRfc(){
-return "Carniceria La cabaña";
+return "RFC: ROC920228";
 }
 public String telefono(){
-return "Carniceria La cabaña";
+return "814152";
 }
 public String direccion(){
-return "Carniceria La cabaña";
+return "28 DE AGOSTO #20";
 }
 public void exportarExcel(JTable t) throws IOException {
         JFileChooser chooser = new JFileChooser();

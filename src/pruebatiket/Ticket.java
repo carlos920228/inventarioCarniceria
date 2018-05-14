@@ -30,7 +30,7 @@
 /*    */   
 /* 31 */   public static void AddPieLinea(String line) { LineasPie.add(line); }
 /*    */   
-/* 33 */   public static String DibujarLinea(int valor) { String raya = ""; for (int x = 0; x < valor; x++) raya = raya + "-"; return raya;
+/* 33 */   public static String DibujarLinea(int valor) { String raya = ""; for (int x = 0; x < valor; x++) raya = raya + "_"; return raya;
 /*    */   }
 /*    */   
 /* 36 */   public static String cortarHoja() { return "\033m"; }
@@ -64,6 +64,7 @@
 /* 64 */       items.removeAll(items);
 /* 65 */       totales.removeAll(totales);
 /* 66 */       LineasPie.removeAll(LineasPie);
+               System.out.println(cadena);
 /* 67 */       cadena = "";
 /*    */     } catch (Exception e) {
 /* 69 */       JOptionPane.showMessageDialog(null, "Error al imprimir :(");
