@@ -167,7 +167,7 @@ public class Salidas extends javax.swing.JFrame {
         data.add(jComboBox1.getSelectedIndex());
         data.add(jComboBox3.getSelectedIndex());
         data.add(jComboBox2.getSelectedIndex());
-        data.add(jLabel9.getText());
+        data.add(total());
         return data;
     }
 
@@ -508,7 +508,7 @@ public class Salidas extends javax.swing.JFrame {
             partida = partida + 1;
         }
     }
-    private void total() {
+    private Double total() {
         Double total = 0.0;
         for (int i = 0; i < this.jTable1.getRowCount(); i++) {
             if (table.getValueAt(i, 0).equals("Combo")) {
@@ -527,7 +527,7 @@ public class Salidas extends javax.swing.JFrame {
         }
         
         this.jLabel9.setText(new Utilerias().moneda(total));
-
+        return total;
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton3;

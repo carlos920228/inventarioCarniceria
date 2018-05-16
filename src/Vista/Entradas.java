@@ -322,7 +322,7 @@ public class Entradas extends javax.swing.JFrame {
     }
     return data;
     }
-    private void total() {
+    private Double total() {
         Double total = 0.0;
         float merma=0.0F;
         for (int i = 0; i < this.jTable1.getRowCount(); i++) {
@@ -335,13 +335,14 @@ public class Entradas extends javax.swing.JFrame {
         }}
         this.jLabel7.setText(new Utilerias().moneda(total));
         this.jLabel6.setText(Float.toString(merma));
+        return total;
     }
     private void insert(){
     ArrayList<String> data=new ArrayList();
     data.add(jTextField4.getText());
     data.add(jTextField2.getText());
     data.add(jTextField5.getText());
-    data.add(jLabel7.getText());
+    data.add(String.valueOf(total()));
     data.add(jLabel6.getText());
     data.add(jTextField3.getText());
     ArrayList rows=loadData();
