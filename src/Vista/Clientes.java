@@ -132,7 +132,11 @@ public class Clientes extends javax.swing.JFrame {
      new Menu();
      this.dispose();
     }//GEN-LAST:event_jButton4ActionPerformed
-
+private void reset(){
+jTextField1.setText("");
+jTextField2.setText("");
+jTextField3.setText("");
+}
     private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField2ActionPerformed

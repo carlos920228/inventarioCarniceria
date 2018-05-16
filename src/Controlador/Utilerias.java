@@ -10,6 +10,8 @@ import java.awt.Desktop;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.NumberFormat;
+import java.util.Locale;
 import javafx.scene.control.Cell;
 import javax.swing.JFileChooser;
 import javax.swing.JTable;
@@ -94,4 +96,9 @@ public void exportarExcel(JTable t) throws IOException {
             }
         }
     }
+public String moneda(Double cantidad){
+ Locale locale = new Locale("es","MX"); // elegimos México
+ NumberFormat nf = NumberFormat.getCurrencyInstance(locale);
+ return nf.format(cantidad);
+}
 }

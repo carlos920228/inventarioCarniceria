@@ -257,4 +257,33 @@ public class mEntradas {
         }
         return costo;
     }
+    /**
+     *
+     * @param inicio
+     * @param fin
+     * @return
+     */
+    public ArrayList reporteFacturas(String inicio, String fin) {
+        ArrayList rows = new ArrayList();
+        Conexion conexion = new Conexion();
+        conexion.conectar();
+        try {
+            Statement sql = conexion.getConexion().createStatement();
+                  ResultSet resultado = sql.executeQuery("select *from compra where fecha BETWEEN '"+ inicio + "' and '"+ fin+"'");
+                   while (resultado.next()) {
+                       ArrayList data=new ArrayList();
+                        data.add(resultado.getString("idcompras"));
+                        data.add(resultado.getString("proveedor"));
+                        data.add(resultado.getString("sellos"));
+                        data.add(resultado.getString("folio"));
+                        data.add(resultado.getString("fecha"));
+                        data.add(resultado.getString("total"));
+                        rows.add(data);
+            }
+            conexion.getConexion().close();
+        } catch (Exception e) {
+            System.out.println("Error reporte Facturas: " + e);
+        }
+        return rows;
+    }
 }

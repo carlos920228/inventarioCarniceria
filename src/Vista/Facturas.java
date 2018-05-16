@@ -23,6 +23,15 @@ DefaultTableModel table;
         setVisible(true);
         table=(DefaultTableModel)jTable1.getModel();
         loadBuy();
+        this.setExtendedState(MAXIMIZED_BOTH);
+    }
+    public Facturas(String id) {
+        initComponents();
+        setTitle("Entradas a inventario");
+        setVisible(true);
+        table=(DefaultTableModel)jTable1.getModel();
+        loadBuy(id);
+        this.setExtendedState(MAXIMIZED_BOTH);
     }
 
     @SuppressWarnings("unchecked")
@@ -278,7 +287,8 @@ ArrayList buyData=(ArrayList)data.get(0);
     jTextField3.setText(buyData.get(2).toString());
     jTextField2.setText(buyData.get(3).toString());
     jLabel10.setText(buyData.get(4).toString());
-    jLabel8.setText(buyData.get(5).toString());
+    Double total=Double.parseDouble(buyData.get(5).toString());
+    jLabel8.setText(new Utilerias().moneda(total));
     jLabel6.setText(buyData.get(6).toString());
     for (Object x:data) {
        ArrayList row=(ArrayList)x;
@@ -298,7 +308,8 @@ private void loadBuy(String id){
     jTextField3.setText(buyData.get(2).toString());
     jTextField2.setText(buyData.get(3).toString());
     jLabel10.setText(buyData.get(4).toString());
-    jLabel8.setText(buyData.get(5).toString());
+    Double total=Double.parseDouble(buyData.get(5).toString());
+    jLabel8.setText(new Utilerias().moneda(total));
     jLabel6.setText(buyData.get(6).toString());
     for (Object x:data) {
        ArrayList row=(ArrayList)x;

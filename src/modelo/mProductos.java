@@ -81,4 +81,24 @@ conexion.conectar();
         return false;
     }
 }
+public ArrayList existencia(){
+Conexion conexion=new Conexion();
+conexion.conectar();
+ArrayList data=new ArrayList();
+    try {
+        Statement sql=conexion.getConexion().createStatement();
+        ResultSet resultado=sql.executeQuery("select *from Productos");
+        while(resultado.next()){
+        ArrayList row=new ArrayList();
+        row.add(resultado.getString("descripcion"));
+        row.add(resultado.getString("exitencia"));
+        row.add(resultado.getString("um"));
+        data.add(row);
+        }
+        conexion.getConexion().close();
+    } catch (Exception e) {
+        System.out.println("Error consulta inventario: "+e);
+    }
+return data;
+}
 }

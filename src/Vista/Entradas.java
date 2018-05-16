@@ -323,7 +323,7 @@ public class Entradas extends javax.swing.JFrame {
     return data;
     }
     private void total() {
-        float total = 0.0F;
+        Double total = 0.0;
         float merma=0.0F;
         for (int i = 0; i < this.jTable1.getRowCount(); i++) {
             if(table.getValueAt(i, 8)!=null){
@@ -333,7 +333,7 @@ public class Entradas extends javax.swing.JFrame {
             merma+=Float.parseFloat(this.table.getValueAt(i,7).toString());
             total += subtotal;
         }}
-        this.jLabel7.setText(Float.toString(total));
+        this.jLabel7.setText(new Utilerias().moneda(total));
         this.jLabel6.setText(Float.toString(merma));
     }
     private void insert(){

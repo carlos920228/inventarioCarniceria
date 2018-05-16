@@ -136,6 +136,7 @@ public class Salidas extends javax.swing.JFrame {
         jComboBox3.setSelectedIndex((int) datos.get(1));
         jComboBox2.setSelectedIndex((int) datos.get(2));
         this.combos = combos;
+        this.setExtendedState(MAXIMIZED_BOTH);
 
     }
 
@@ -243,6 +244,7 @@ public class Salidas extends javax.swing.JFrame {
                     }
                 }
             }
+            imprimirTicket(tab,id);
             imprimirTicket(tab,id);
             JOptionPane.showMessageDialog(null, "Transferencia guardada con " + error + " Errores");
             reset();
@@ -507,7 +509,7 @@ public class Salidas extends javax.swing.JFrame {
         }
     }
     private void total() {
-        float total = 0.0F;
+        Double total = 0.0;
         for (int i = 0; i < this.jTable1.getRowCount(); i++) {
             if (table.getValueAt(i, 0).equals("Combo")) {
                 float cantidad = Float.parseFloat(this.table.getValueAt(i, 2).toString());
@@ -523,7 +525,8 @@ public class Salidas extends javax.swing.JFrame {
                 }
             }
         }
-        this.jLabel9.setText(Float.toString(total));
+        
+        this.jLabel9.setText(new Utilerias().moneda(total));
 
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables

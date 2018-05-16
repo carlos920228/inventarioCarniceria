@@ -124,6 +124,7 @@ public class Productos extends javax.swing.JFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
           if(new mProductos().agregarProducto(data())){
               JOptionPane.showMessageDialog(null,"Producto agregado correctamente");
+              reset();
           }else{
               JOptionPane.showMessageDialog(null,"Error");
           }
@@ -134,6 +135,10 @@ ArrayList <String> data= new ArrayList();
 data.add(jTextField1.getText());
 data.add(jTextField2.getText());
 return data;
+}
+private void reset(){
+jTextField1.setText("");
+jTextField2.setText("");
 }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;

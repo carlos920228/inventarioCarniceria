@@ -58,8 +58,7 @@
 /* 58 */     Doc doc = new SimpleDoc(bytes, flavor, null);
 /*    */     try {
 /* 60 */       pj.print(doc, null);
-/*    */       
-/* 62 */       CabezaLineas.removeAll(CabezaLineas);
+/*    */       CabezaLineas.removeAll(CabezaLineas);
 /* 63 */       subCabezaLineas.removeAll(subCabezaLineas);
 /* 64 */       items.removeAll(items);
 /* 65 */       totales.removeAll(totales);

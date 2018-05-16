@@ -261,7 +261,8 @@ private void loadCompany() {
         total();
     }
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
+        new Reporteador();
+        this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
@@ -308,12 +309,12 @@ private void loadCompany() {
         jTextField1.setText("");
     }
     private void total() {
-        float total = 0.0F;
+        Double total = 0.0;
         for (int i = 0; i < this.jTable1.getRowCount(); i++) {
-                    float subtotal = Float.parseFloat(this.jTable1.getValueAt(i, 5).toString());
+                    Double subtotal = Double.parseDouble(this.jTable1.getValueAt(i, 5).toString());
                     total += subtotal;
                 }
-            this.jLabel6.setText(Float.toString(total));
+            this.jLabel6.setText(new Utilerias().moneda(total));
         }
         
 

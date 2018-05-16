@@ -200,6 +200,7 @@ public class AgregarUsuario extends javax.swing.JFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
       if(new mUsuarios().insertarUsuario(data())){
       JOptionPane.showMessageDialog(null,"Agregado correctamente");
+      reset();
       }else{
      JOptionPane.showMessageDialog(null,"Error");
       }
@@ -235,6 +236,13 @@ datos.add(jTextField4.getText());
 datos.add(jTextField5.getText());
 datos.add(jComboBox1.getSelectedItem().toString());
 return datos;
+}
+public void reset(){
+jTextField1.setText("");
+jTextField1.setText("");
+jTextField1.setText("");
+jTextField1.setText("");
+jTextField1.setText("");
 }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;

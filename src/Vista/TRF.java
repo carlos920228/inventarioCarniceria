@@ -18,6 +18,7 @@ DefaultTableModel table;
         table = (DefaultTableModel) jTable1.getModel();
         setVisible(true);
         loadData();
+        this.setExtendedState(MAXIMIZED_BOTH);
     }
      public TRF(String id) {
         initComponents();
@@ -25,6 +26,7 @@ DefaultTableModel table;
         table = (DefaultTableModel) jTable1.getModel();
         setVisible(true);
         loadBuy(id);
+        this.setExtendedState(MAXIMIZED_BOTH);
     }
 
     @SuppressWarnings("unchecked")
@@ -173,7 +175,7 @@ DefaultTableModel table;
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE))
+                                .addGap(0, 99, Short.MAX_VALUE))
                             .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addContainerGap())
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
@@ -182,10 +184,10 @@ DefaultTableModel table;
                         .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(309, 309, 309)
-                        .addComponent(jLabel11, javax.swing.GroupLayout.DEFAULT_SIZE, 177, Short.MAX_VALUE)
-                        .addGap(47, 47, 47)
-                        .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGap(287, 287, 287)
+                        .addComponent(jLabel11, javax.swing.GroupLayout.DEFAULT_SIZE, 102, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 298, javax.swing.GroupLayout.PREFERRED_SIZE))))
             .addComponent(jScrollPane1)
         );
         jPanel2Layout.setVerticalGroup(
@@ -258,7 +260,8 @@ jLabel8.setText(metaData.get(2).toString());
 jLabel7.setText(metaData.get(3).toString());
 jLabel9.setText(metaData.get(4).toString());
 jLabel10.setText(metaData.get(5).toString());
-jLabel12.setText(metaData.get(6).toString());
+Double d=Double.parseDouble(metaData.get(6).toString());
+jLabel12.setText(new Utilerias().moneda(d));
 loadTable(metaData.get(0).toString());
 }
 private void loadData(String id){
@@ -269,7 +272,8 @@ jLabel8.setText(metaData.get(2).toString());
 jLabel7.setText(metaData.get(3).toString());
 jLabel9.setText(metaData.get(4).toString());
 jLabel10.setText(metaData.get(5).toString());
-jLabel12.setText(metaData.get(6).toString());
+Double d=Double.parseDouble(metaData.get(6).toString());
+jLabel12.setText(new Utilerias().moneda(d));
 loadTable(metaData.get(0).toString());
 }
 private void loadBuy(String id){
