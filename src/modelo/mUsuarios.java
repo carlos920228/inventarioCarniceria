@@ -45,4 +45,21 @@ public class mUsuarios {
     return resultado;
     }
     
+    /**
+     * Método que devuelve los datos del usuario si los encuentra
+     * @param user
+     * @param pass
+     * @return 
+     */
+    public ArrayList loggin(String user, String pass){
+    ArrayList data=new ArrayList();
+    Conexion conexion=new Conexion();
+    conexion.conectar();
+        try {
+            
+        } catch (Exception e) {
+        }
+    return data;
+    
+    }
 }
