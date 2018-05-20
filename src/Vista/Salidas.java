@@ -179,7 +179,7 @@ public class Salidas extends javax.swing.JFrame {
         data.add(destino.getName());
         data.add(chofer.getName());
         data.add(surtio.getName());
-        data.add(jLabel9.getText());
+        data.add(total());
         return data;
     }
 

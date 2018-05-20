@@ -345,6 +345,7 @@ public class Entradas extends javax.swing.JFrame {
     data.add(String.valueOf(total()));
     data.add(jLabel6.getText());
     data.add(jTextField3.getText());
+    data.add(jTextField1.getText());
     ArrayList rows=loadData();
     if(new mEntradas().insertBuy(data)){
         for (Object o:rows) {

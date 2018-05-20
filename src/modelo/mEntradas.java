@@ -30,7 +30,7 @@ public class mEntradas {
         conexion.conectar();
         try {
          Statement sql=conexion.getConexion().createStatement();
-         sql.executeUpdate("insert into compra(folio,fecha,proveedor,total,MermaTotal,sellos) values('"+datos.get(0)+"','"+datos.get(1)+"','"+datos.get(2)+"','"+datos.get(3)+"','"+datos.get(4)+"','"+datos.get(5)+"')");
+         sql.executeUpdate("insert into compra(idcompras,folio,fecha,proveedor,total,MermaTotal,sellos) values('"+datos.get(6)+"','"+datos.get(0)+"','"+datos.get(1)+"','"+datos.get(2)+"','"+datos.get(3)+"','"+datos.get(4)+"','"+datos.get(5)+"')");
         return true;
         }catch(Exception e){
             System.out.println("Error al insertar compra: "+e);
