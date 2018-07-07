@@ -8,15 +8,16 @@ import java.sql.Statement;
 import java.sql.*;
 public class Conexion {
     public int cools;
-    public String cadena="jdbc:mysql://148.72.24.119:3306/pruebaMood";
+    //public String cadena="jdbc:mysql://localhost/pruebaMood";
     public String driver="com.mysql.jdbc.Driver";
     Connection conexion;
-    
+    public  String cadena = "jdbc:mysql://148.72.24.119:3306/pruebaMood" ;
     public void conectar(){
         
         try{
             Class.forName(driver);
-            conexion=DriverManager.getConnection(cadena,"carlosRC","rocc920228");            
+            //conexion=DriverManager.getConnection(cadena,"root","123456"); 
+            conexion=DriverManager.getConnection(cadena,"carlosRC","rocc920228");
         }catch(ClassNotFoundException e1){
             System.out.println("Error en los drivers");
             System.out.println(e1);

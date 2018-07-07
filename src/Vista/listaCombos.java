@@ -9,9 +9,20 @@ public class listaCombos extends javax.swing.JFrame {
 
     DefaultTableModel table;
     ArrayList data,prods;
+    String venta;
     public listaCombos(ArrayList data, ArrayList prods) {
         this.data=data;
         this.prods=prods;
+        initComponents();
+        setVisible(true);
+        table = (DefaultTableModel) jTable1.getModel();
+        setTitle("Inventario Combos");
+        loadCombos();
+    }
+    public listaCombos(ArrayList data, ArrayList prods, String venta) {
+        this.data=data;
+        this.prods=prods;
+        this.venta=venta;
         initComponents();
         setVisible(true);
         table = (DefaultTableModel) jTable1.getModel();
@@ -134,7 +145,10 @@ public class listaCombos extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        new Salidas(prods,data,returnData());
+        if(venta.isEmpty()){new Salidas(prods,data,returnData());
+        }else{
+        new Venta(prods,data,returnData());
+        }
         this.dispose();
     }//GEN-LAST:event_jButton3ActionPerformed
     private ArrayList returnData(){

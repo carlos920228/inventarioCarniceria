@@ -44,7 +44,7 @@ ArrayList<ArrayList> data=new ArrayList();
     return data;
 }
 /**
- * Método que acualiza la existencia de un producto, recibe la cantidad y la descripción del producto
+ * Método que actualiza la existencia de un producto, recibe la cantidad y la descripción del producto
  * @param sum
  * @param des
  * @return 
@@ -77,7 +77,7 @@ conexion.conectar();
         conexion.getConexion().close();
         return true;
     } catch (Exception e) {
-        JOptionPane.showMessageDialog(null,"Erro al afectar existencias,enviar foto a sistemas: "+e);
+        JOptionPane.showMessageDialog(null,"Error al afectar existencias,enviar foto a sistemas: "+e);
         return false;
     }
 }
