@@ -30,7 +30,7 @@ conexion.conectar();
 ArrayList<ArrayList> data=new ArrayList();
     try {
         Statement sql=conexion.getConexion().createStatement();
-        ResultSet result=sql.executeQuery("select idProductos, descripcion from Productos");
+        ResultSet result=sql.executeQuery("select idProductos, descripcion from Productos order by descripcion");
         while(result.next()){
          ArrayList<String> product=new ArrayList();
          product.add(result.getString("idProductos"));

@@ -68,6 +68,8 @@ public class Salidas extends javax.swing.JFrame {
         Ticket.AddSubCabecera(Ticket.DarEspacio());
         Ticket.AddSubCabecera("  AUTORIZO   " + new Utilerias().usuario());
         Ticket.AddSubCabecera(Ticket.DarEspacio());
+        Ticket.AddSubCabecera("DESTINO: " + jComboBox2.getSelectedItem().toString());
+        Ticket.AddSubCabecera(Ticket.DarEspacio());
         Ticket.AddSubCabecera(Ticket.DarEspacio());
         Ticket.AddSubCabecera("_________________________________________________");
         Ticket.AddItem("", "", Ticket.DarEspacio());
@@ -333,7 +335,7 @@ public class Salidas extends javax.swing.JFrame {
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, true, false
+                false, false, true, true, false, false, true, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -353,6 +355,11 @@ public class Salidas extends javax.swing.JFrame {
 
         jComboBox4.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jComboBox4.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox4ActionPerformed(evt);
+            }
+        });
         jComboBox4.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 jComboBox4KeyTyped(evt);
@@ -488,6 +495,30 @@ public class Salidas extends javax.swing.JFrame {
     private void jComboBox4KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jComboBox4KeyTyped
         if (evt.getKeyChar() == '\n') {
             Producto p = (Producto) jComboBox4.getSelectedItem();
+            switch(p.getName()){
+                case "Combo": new listaCombos(data(), loadData());
+                              this.dispose();
+                              break;
+                case "combo": new listaCombos(data(), loadData());
+                              this.dispose();
+                              break;
+                case "Traseros": new listaCombos(data(), loadData());
+                              this.dispose();
+                              break;
+                case "traseros": new listaCombos(data(), loadData());
+                              this.dispose();
+                              break;
+                case "Delanteros": new listaCombos(data(), loadData());
+                              this.dispose();
+                              break;
+                case "delanteros": new listaCombos(data(), loadData());
+                              this.dispose();
+                              break;
+                default: Producto p2 = (Producto) jComboBox4.getSelectedItem();
+                table.addRow(new Object[]{p2.getName(), "0", "0", "0", "0", new mEntradas().ultimoCosto(p.getName()), "1", "0"});
+                total();
+                partida = partida + 1;
+            }
             if (p.getName().equals("combo") || p.getName().equals("Combo")) {
                 new listaCombos(data(), loadData());
                 this.dispose();
@@ -508,6 +539,10 @@ public class Salidas extends javax.swing.JFrame {
         new Menu();
         this.dispose();
     }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jComboBox4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox4ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBox4ActionPerformed
     private void loadTable(ArrayList da) {
         for (Object o : da) {
             ArrayList r = (ArrayList) o;

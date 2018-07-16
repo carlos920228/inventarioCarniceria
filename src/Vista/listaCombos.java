@@ -18,6 +18,7 @@ public class listaCombos extends javax.swing.JFrame {
         table = (DefaultTableModel) jTable1.getModel();
         setTitle("Inventario Combos");
         loadCombos();
+        venta="";
     }
     public listaCombos(ArrayList data, ArrayList prods, String venta) {
         this.data=data;

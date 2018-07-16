@@ -446,6 +446,9 @@ private void imprimirTicket(ArrayList productos, String folio) {
         java.text.SimpleDateFormat fecha = new java.text.SimpleDateFormat("dd/MM/yyyy");
         java.text.SimpleDateFormat hora = new java.text.SimpleDateFormat("hh:mm:ss aa");
         Ticket.AddCabecera(Ticket.DarEspacio());
+          Ticket.AddSubCabecera("Cliente:  " + jTextField2.getText());
+        Ticket.AddSubCabecera(Ticket.DarEspacio());
+        Ticket.AddSubCabecera(Ticket.DarEspacio());
         Ticket.AddCabecera(new Utilerias().local());
         Ticket.AddCabecera(Ticket.DarEspacio());
         Ticket.AddCabecera(Ticket.DarEspacio());

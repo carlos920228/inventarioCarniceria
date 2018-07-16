@@ -237,8 +237,8 @@
                   <Table columnCount="8" rowCount="0">
                     <Column editable="false" title="Producto" type="java.lang.Object"/>
                     <Column editable="false" title="Partida" type="java.lang.Object"/>
-                    <Column editable="false" title="K Etiqueta" type="java.lang.Object"/>
-                    <Column editable="false" title="# Piezas" type="java.lang.Object"/>
+                    <Column editable="true" title="K Etiqueta" type="java.lang.Object"/>
+                    <Column editable="true" title="# Piezas" type="java.lang.Object"/>
                     <Column editable="false" title="Merma" type="java.lang.Object"/>
                     <Column editable="false" title="Costo" type="java.lang.Object"/>
                     <Column editable="true" title="Cantidad" type="java.lang.Object"/>
@@ -365,6 +365,7 @@
             </Property>
           </Properties>
           <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jComboBox4ActionPerformed"/>
             <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jComboBox4KeyTyped"/>
           </Events>
           <AuxValues>

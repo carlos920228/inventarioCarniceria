@@ -7,8 +7,10 @@ package Controlador;
 
 import com.sun.rowset.internal.Row;
 import java.awt.Desktop;
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.IOException;
 import java.text.NumberFormat;
 import java.util.Locale;
@@ -32,19 +34,89 @@ public class Utilerias {
    
    }
 public String usuario(){
-return "Admin";
+try {
+        BufferedReader fr = new BufferedReader(new FileReader("usuario.txt")); 
+        String local="";
+        while(fr.ready()){
+        local=fr.readLine();
+        }
+        fr.close();
+        return local;
+    } catch (Exception e) {
+        System.out.println(e);
+        return"Error";
+    }
 }
 public String local(){
-return "Carniceria La cabaña";
+    try {
+        BufferedReader fr = new BufferedReader(new FileReader("local.txt")); 
+        String local="";
+        while(fr.ready()){
+        local=fr.readLine();
+        }
+        fr.close();
+        return local;
+    } catch (Exception e) {
+        System.out.println(e);
+        return"Error";
+    }
 }
+
 public String leerRfc(){
-return "RFC: ROC920228";
+try {
+        BufferedReader fr = new BufferedReader(new FileReader("rfc.txt")); 
+        String local="";
+        while(fr.ready()){
+        local=fr.readLine();
+        }
+        fr.close();
+        return local;
+    } catch (Exception e) {
+        System.out.println(e);
+        return"Error";
+    }
 }
 public String telefono(){
-return "814152";
+try {
+        BufferedReader fr = new BufferedReader(new FileReader("telefono.txt")); 
+        String local="";
+        while(fr.ready()){
+        local=fr.readLine();
+        }
+        fr.close();
+        return local;
+    } catch (Exception e) {
+        System.out.println(e);
+        return"Error";
+    }
 }
 public String direccion(){
-return "28 DE AGOSTO #20";
+try {
+        BufferedReader fr = new BufferedReader(new FileReader("direccion.txt")); 
+        String local="";
+        while(fr.ready()){
+        local=fr.readLine();
+        }
+        fr.close();
+        return local;
+    } catch (Exception e) {
+        System.out.println(e);
+        return"Error";
+    }
+}
+public String permiso(){
+try {
+        BufferedReader fr = new BufferedReader(new FileReader("permiso.txt")); 
+        String local="";
+        while(fr.ready()){
+        local=fr.readLine();
+        }
+        fr.close();
+        return local;
+    } catch (Exception e) {
+        System.out.println(e);
+        return"Error";
+    }
 }
 public void exportarExcel(JTable t) throws IOException {
         JFileChooser chooser = new JFileChooser();

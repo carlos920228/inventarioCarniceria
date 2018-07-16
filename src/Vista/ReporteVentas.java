@@ -35,6 +35,9 @@ public class ReporteVentas extends javax.swing.JFrame {
         jDateChooser2.setDate(new java.util.Date());
         jTextField1.setBackground(Color.WHITE);
         jComboBox1.setSelectedIndex(2);
+        if(!new Utilerias().permiso().equals("1")){
+        jButton4.setEnabled(false);
+        }
     }
 
     @SuppressWarnings("unchecked")
