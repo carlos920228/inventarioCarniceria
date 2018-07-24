@@ -2,6 +2,8 @@
 package Vista;
 
 import Controlador.Utilerias;
+import java.awt.Image;
+import java.awt.Toolkit;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -12,6 +14,9 @@ public class Pedidos extends javax.swing.JFrame {
 DefaultTableModel tabla;
     public Pedidos() {
         initComponents();
+        Image f= Toolkit.getDefaultToolkit().
+        getImage(ClassLoader.getSystemResource("image/caba_1.png"));
+        this.setIconImage(f);
         setTitle("Pedidos");
         setVisible(true);
         tabla=(DefaultTableModel)jTable1.getModel();

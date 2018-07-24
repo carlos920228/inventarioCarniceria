@@ -6,6 +6,8 @@
 package Vista;
 
 import Controlador.Utilerias;
+import java.awt.Image;
+import java.awt.Toolkit;
 import java.util.ArrayList;
 import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
@@ -19,6 +21,9 @@ public class Entradas extends javax.swing.JFrame {
     int numRow;
     public Entradas() {
         initComponents();
+        Image f= Toolkit.getDefaultToolkit().
+        getImage(ClassLoader.getSystemResource("image/caba_1.png"));
+        this.setIconImage(f);
         setTitle("Entradas a inventario");
         loadProductList();
         setVisible(true);

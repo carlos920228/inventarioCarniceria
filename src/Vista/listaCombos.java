@@ -1,5 +1,7 @@
 package Vista;
 
+import java.awt.Image;
+import java.awt.Toolkit;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -10,36 +12,42 @@ public class listaCombos extends javax.swing.JFrame {
     DefaultTableModel table;
     ArrayList data,prods;
     String venta;
-    public listaCombos(ArrayList data, ArrayList prods) {
+    String producto;
+    public listaCombos(ArrayList data, ArrayList prods, String producto) {
+        this.producto=producto;
         this.data=data;
         this.prods=prods;
         initComponents();
+        Image f= Toolkit.getDefaultToolkit().
+        getImage(ClassLoader.getSystemResource("image/caba_1.png"));
+        this.setIconImage(f);
         setVisible(true);
         table = (DefaultTableModel) jTable1.getModel();
-        setTitle("Inventario Combos");
+        setTitle("Inventario "+producto);
         loadCombos();
         venta="";
     }
-    public listaCombos(ArrayList data, ArrayList prods, String venta) {
+    public listaCombos(ArrayList data, ArrayList prods, String venta, String producto) {
+        this.producto=producto;
         this.data=data;
         this.prods=prods;
         this.venta=venta;
         initComponents();
         setVisible(true);
         table = (DefaultTableModel) jTable1.getModel();
-        setTitle("Inventario Combos");
+        setTitle("Inventario "+producto);
         loadCombos();
     }
     
     private void loadCombos() {
-        ArrayList data = new mEntradas().exisCombo();
+        ArrayList data = new mEntradas().exisCombo(producto);
         if (!data.isEmpty()) {
             for (Object x : data) {
                 ArrayList row=(ArrayList)x;
                 table.addRow(row.toArray());
             }
         } else {
-            JOptionPane.showMessageDialog(null, "No hay existencia de combos");
+            JOptionPane.showMessageDialog(null, "No hay existencia de "+producto);
         }
     }
 
@@ -157,7 +165,7 @@ public class listaCombos extends javax.swing.JFrame {
     for (int i = 0; i < this.jTable1.getRowCount(); i++) {
         if((boolean)table.getValueAt(i, 0)){
         ArrayList row= new ArrayList();
-        row.add("Combo");
+        row.add(producto);
         row.add(table.getValueAt(i, 2).toString());
         row.add(table.getValueAt(i, 3).toString());
         row.add(table.getValueAt(i, 4).toString());

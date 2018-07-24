@@ -242,7 +242,7 @@
                     <Column editable="false" title="Merma" type="java.lang.Object"/>
                     <Column editable="false" title="Costo" type="java.lang.Object"/>
                     <Column editable="true" title="Cantidad" type="java.lang.Object"/>
-                    <Column editable="false" title="idCombo" type="java.lang.Object"/>
+                    <Column editable="false" title="idSis" type="java.lang.Object"/>
                   </Table>
                 </Property>
                 <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">

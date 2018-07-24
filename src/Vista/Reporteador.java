@@ -5,6 +5,9 @@
  */
 package Vista;
 
+import java.awt.Image;
+import java.awt.Toolkit;
+
 /**
  *
  * @author Supervisor
@@ -13,6 +16,9 @@ public class Reporteador extends javax.swing.JFrame {
 
     public Reporteador() {
         initComponents();
+        Image f= Toolkit.getDefaultToolkit().
+        getImage(ClassLoader.getSystemResource("image/caba_1.png"));
+        this.setIconImage(f);
         setTitle("Reporteador");
         setVisible(true);
         this.setExtendedState(MAXIMIZED_BOTH);

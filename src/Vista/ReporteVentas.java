@@ -5,6 +5,8 @@ import Controlador.Utilerias;
 import static com.sun.webkit.perf.WCFontPerfLogger.reset;
 import java.awt.Color;
 import static java.awt.Frame.MAXIMIZED_BOTH;
+import java.awt.Image;
+import java.awt.Toolkit;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
@@ -13,6 +15,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
@@ -24,7 +27,10 @@ public class ReporteVentas extends javax.swing.JFrame {
     private TableRowSorter trsfiltro;
     public ReporteVentas() {
         initComponents();
-         setTitle("Reporte Transferencias");
+        Image f= Toolkit.getDefaultToolkit().
+        getImage(ClassLoader.getSystemResource("image/caba_1.png"));
+        this.setIconImage(f);
+         setTitle("Reporte Ventas");
         tabla = (DefaultTableModel) jTable1.getModel();
         this.setExtendedState(MAXIMIZED_BOTH);
         setVisible(true);
@@ -38,6 +44,9 @@ public class ReporteVentas extends javax.swing.JFrame {
         if(!new Utilerias().permiso().equals("1")){
         jButton4.setEnabled(false);
         }
+        RenderRow rr = new RenderRow(6);
+        jTable1.setDefaultRenderer(Object.class, rr);
+        loadTable(new mVentas().listSale());
     }
 
     @SuppressWarnings("unchecked")
@@ -167,7 +176,7 @@ public class ReporteVentas extends javax.swing.JFrame {
                         .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
                 .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(0, 17, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -192,14 +201,13 @@ public class ReporteVentas extends javax.swing.JFrame {
                         .addContainerGap()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel2)
-                                    .addComponent(jDateChooser2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING)
                                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                         .addComponent(jLabel4)
                                         .addComponent(jLabel1))
-                                    .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(jDateChooser2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -260,6 +268,8 @@ private ArrayList loadData() {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        
+        try{trsfiltro.setRowFilter(RowFilter.regexFilter(""));}catch(Exception e){}
         ArrayList data = loadData();
         reset();
         loadTable(new mVentas().listSale(data.get(0).toString(), data.get(1).toString(),jComboBox1.getSelectedItem().toString()));
@@ -283,8 +293,11 @@ private void loadTable(ArrayList rows) {
         total();
     }
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        if(tabla.getValueAt(jTable1.getSelectedRow(),6).equals("Pagado")){
+        JOptionPane.showMessageDialog(null,"Error, la venta ya fue cobrada");
+        }else{
         new Cobrar(cobrar());
-        this.dispose();
+        this.dispose();}
         
 
     }//GEN-LAST:event_jButton4ActionPerformed

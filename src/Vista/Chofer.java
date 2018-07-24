@@ -5,6 +5,9 @@
  */
 package Vista;
 
+import static com.sun.webkit.graphics.WCImage.getImage;
+import java.awt.Image;
+import java.awt.Toolkit;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import modelo.mRepartidor;
@@ -15,6 +18,9 @@ public class Chofer extends javax.swing.JFrame {
         initComponents();
         setVisible(true);
         setTitle("Agregar Repartidor");
+        Image f= Toolkit.getDefaultToolkit().
+        getImage(ClassLoader.getSystemResource("image/caba_1.png"));
+        this.setIconImage(f);
     }
 
     @SuppressWarnings("unchecked")

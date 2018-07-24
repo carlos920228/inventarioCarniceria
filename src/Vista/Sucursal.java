@@ -1,5 +1,7 @@
 package Vista;
 
+import java.awt.Image;
+import java.awt.Toolkit;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import modelo.mSucursal;
@@ -7,6 +9,9 @@ import modelo.mSucursal;
 public class Sucursal extends javax.swing.JFrame {
     public Sucursal() {
         initComponents();
+        Image f= Toolkit.getDefaultToolkit().
+        getImage(ClassLoader.getSystemResource("image/caba_1.png"));
+        this.setIconImage(f);
         setVisible(true);
         setTitle("Registrar Sucursal");
     }

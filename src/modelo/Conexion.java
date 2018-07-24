@@ -9,9 +9,10 @@ import java.sql.*;
 public class Conexion {
     public int cools;
     //public String cadena="jdbc:mysql://localhost/pruebaMood";
+    public  String cadena = "jdbc:mysql://148.72.24.119:3306/pruebaMood";
     public String driver="com.mysql.jdbc.Driver";
     Connection conexion;
-    public  String cadena = "jdbc:mysql://148.72.24.119:3306/pruebaMood" ;
+    
     public void conectar(){
         
         try{

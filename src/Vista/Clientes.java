@@ -1,5 +1,7 @@
 package Vista;
 
+import java.awt.Image;
+import java.awt.Toolkit;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import modelo.mClientes;
@@ -9,6 +11,9 @@ public class Clientes extends javax.swing.JFrame {
         initComponents();
         setVisible(true);
         setTitle("Agregar Clientes");
+        Image f= Toolkit.getDefaultToolkit().
+        getImage(ClassLoader.getSystemResource("image/caba_1.png"));
+        this.setIconImage(f);
     }
 
     @SuppressWarnings("unchecked")

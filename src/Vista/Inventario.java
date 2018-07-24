@@ -2,6 +2,8 @@
 package Vista;
 
 import Controlador.Utilerias;
+import java.awt.Image;
+import java.awt.Toolkit;
 import java.util.ArrayList;
 import modelo.mProductos;
 import javax.swing.table.DefaultTableModel;
@@ -11,11 +13,15 @@ public class Inventario extends javax.swing.JFrame {
     DefaultTableModel tabla;
     public Inventario() {
         initComponents();
+        Image f= Toolkit.getDefaultToolkit().
+        getImage(ClassLoader.getSystemResource("image/caba_1.png"));
+        this.setIconImage(f);
         this.setExtendedState(MAXIMIZED_BOTH);
         setTitle("Inventario");
         tabla=(DefaultTableModel)jTable1.getModel();
         setVisible(true);
         loadTable();
+        
     }
 private void loadTable(){
 ArrayList data=new mProductos().existencia();
@@ -71,15 +77,15 @@ tabla.addRow(row.toArray());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addGap(2, 2, 2)
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
                 .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(72, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -134,17 +140,23 @@ tabla.addRow(row.toArray());
         Ticket.AddItem("", "", Ticket.DarEspacio());
         for (Object x : productos) {
             ArrayList pro = (ArrayList) x;
-            
-            Ticket.AddItem("", "", Ticket.DarEspacio());
+
+            String producto=pro.get(0).toString();
+            while(producto.length()<17){
+            producto=producto+" ";
+            }
+            Ticket.AddItem(producto," Cantidad:"+pro.get(1).toString(), Ticket.DarEspacio());
+            Ticket.AddItem("Conteo Físico   :","_________________________", Ticket.DarEspacio());
         }
-        Ticket.AddTotal(Ticket.DibujarLinea(40), "  ");
+        //Ticket.AddTotal(Ticket.DibujarLinea(40), "  ");
         Ticket.AddTotal("", Ticket.DarEspacio());
         Ticket.AddTotal("", Ticket.DarEspacio());
         Ticket.AddTotal("", Ticket.DarEspacio());
         Ticket.AddTotal("", Ticket.DarEspacio());
-        Ticket.AddPieLinea(Ticket.DibujarLinea(40));
+        //Ticket.AddPieLinea(Ticket.DibujarLinea(40));
         Ticket.AddPieLinea(Ticket.DarEspacio());
-        Ticket.AddPieLinea("  REGIMEN DE INCORPORACION FISCAL");
+        Ticket.AddPieLinea("Verifico:________________________________________");
+        Ticket.AddPieLinea(Ticket.DarEspacio());
         Ticket.AddPieLinea(Ticket.DarEspacio());
         Ticket.AddPieLinea(Ticket.DarEspacio());
         Ticket.ImprimirDocumento();

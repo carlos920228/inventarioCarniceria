@@ -87,11 +87,11 @@ conexion.conectar();
 ArrayList data=new ArrayList();
     try {
         Statement sql=conexion.getConexion().createStatement();
-        ResultSet resultado=sql.executeQuery("select *from Productos");
+        ResultSet resultado=sql.executeQuery("select descripcion, format(exitencia,2) as exi, um from Productos order by descripcion");
         while(resultado.next()){
         ArrayList row=new ArrayList();
         row.add(resultado.getString("descripcion"));
-        row.add(resultado.getString("exitencia"));
+        row.add(resultado.getString("exi"));
         row.add(resultado.getString("um"));
         data.add(row);
         }

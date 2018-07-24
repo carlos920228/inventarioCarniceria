@@ -1,6 +1,8 @@
 package Vista;
 
 import Controlador.Utilerias;
+import java.awt.Image;
+import java.awt.Toolkit;
 import java.util.ArrayList;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
@@ -21,6 +23,9 @@ public class Salidas extends javax.swing.JFrame {
     public Salidas() {
         initComponents();
         setTitle("Salidas");
+        Image f= Toolkit.getDefaultToolkit().
+        getImage(ClassLoader.getSystemResource("image/caba_1.png"));
+        this.setIconImage(f);
         jTextField1.setText(new Controlador.Utilerias().fecha());
         loadProductList();
         destinos();
@@ -236,22 +241,62 @@ public class Salidas extends javax.swing.JFrame {
             int error = 0;
             for (Object o : tab) {
                 ArrayList x = (ArrayList) o;
-                if (x.get(0).toString().equals("Combo")) {
-                    if (new mSalidas().insertRowDeparture(x, id)) {
-                        new mProductos().updateExistence("-" + x.get(6).toString(), x.get(0).toString());
-                        new mProductos().updateCombo(x.get(7).toString());
-                    } else {
-                        System.out.println("Error al insertar la partida combo " + x.get(6).toString() + " " + x.get(0).toString() + ", no se afecto la existecia");
-                        error = error + 1;
-                    }
-                } else {
-                    if (new mSalidas().insertRowDeparture(x, id)) {
-                        new mProductos().updateExistence("-" + x.get(6).toString(), x.get(0).toString());
-                    } else {
-                        System.out.println("Error al insertar la partida " + x.get(6).toString() + " " + x.get(0).toString() + " no se afecto la existecia");
-                        error = error + 1;
-                    }
-                }
+                switch(x.get(0).toString()){
+                case "Combo": if (new mSalidas().insertRowDeparture(x, id)) {
+                                  new mProductos().updateExistence("-" + x.get(6).toString(), x.get(0).toString());
+                                  new mProductos().updateCombo(x.get(7).toString());
+                                } else {
+                                  System.out.println("Error al insertar la partida combo " + x.get(6).toString() + " " + x.get(0).toString() + ", no se afecto la existecia");
+                                  error = error + 1;
+                                }
+                              break;
+                case "combo": if (new mSalidas().insertRowDeparture(x, id)) {
+                                  new mProductos().updateExistence("-" + x.get(6).toString(), x.get(0).toString());
+                                  new mProductos().updateCombo(x.get(7).toString());
+                                } else {
+                                  System.out.println("Error al insertar la partida combo " + x.get(6).toString() + " " + x.get(0).toString() + ", no se afecto la existecia");
+                                  error = error + 1;
+                                }
+                              break;
+                case "Traseros": if (new mSalidas().insertRowDeparture(x, id)) {
+                                  new mProductos().updateExistence("-" + x.get(6).toString(), x.get(0).toString());
+                                  new mProductos().updateCombo(x.get(7).toString());
+                                } else {
+                                  System.out.println("Error al insertar la partida combo " + x.get(6).toString() + " " + x.get(0).toString() + ", no se afecto la existecia");
+                                  error = error + 1;
+                                }
+                              break;
+                case "traseros": if (new mSalidas().insertRowDeparture(x, id)) {
+                                  new mProductos().updateExistence("-" + x.get(6).toString(), x.get(0).toString());
+                                  new mProductos().updateCombo(x.get(7).toString());
+                                } else {
+                                  System.out.println("Error al insertar la partida combo " + x.get(6).toString() + " " + x.get(0).toString() + ", no se afecto la existecia");
+                                  error = error + 1;
+                                }
+                              break;
+                case "Delanteros": if (new mSalidas().insertRowDeparture(x, id)) {
+                                  new mProductos().updateExistence("-" + x.get(6).toString(), x.get(0).toString());
+                                  new mProductos().updateCombo(x.get(7).toString());
+                                } else {
+                                  System.out.println("Error al insertar la partida combo " + x.get(6).toString() + " " + x.get(0).toString() + ", no se afecto la existecia");
+                                  error = error + 1;
+                                }
+                              break;
+                case "delanteros": if (new mSalidas().insertRowDeparture(x, id)) {
+                                  new mProductos().updateExistence("-" + x.get(6).toString(), x.get(0).toString());
+                                  new mProductos().updateCombo(x.get(7).toString());
+                                } else {
+                                  System.out.println("Error al insertar la partida combo " + x.get(6).toString() + " " + x.get(0).toString() + ", no se afecto la existecia");
+                                  error = error + 1;
+                                }
+                              break;
+                default:           if (new mSalidas().insertRowDeparture(x, id)) {
+                                       new mProductos().updateExistence("-" + x.get(6).toString(), x.get(0).toString());
+                                       } else {
+                                         System.out.println("Error al insertar la partida " + x.get(6).toString() + " " + x.get(0).toString() + " no se afecto la existecia");
+                                         error = error + 1;
+                                         }
+                break;}
             }
             imprimirTicket(tab,id);
             imprimirTicket(tab,id);
@@ -331,7 +376,7 @@ public class Salidas extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Producto", "Partida", "K Etiqueta", "# Piezas", "Merma", "Costo", "Cantidad", "idCombo"
+                "Producto", "Partida", "K Etiqueta", "# Piezas", "Merma", "Costo", "Cantidad", "idSis"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -496,38 +541,30 @@ public class Salidas extends javax.swing.JFrame {
         if (evt.getKeyChar() == '\n') {
             Producto p = (Producto) jComboBox4.getSelectedItem();
             switch(p.getName()){
-                case "Combo": new listaCombos(data(), loadData());
+                case "Combo": new listaCombos(data(), loadData(),p.getName());
                               this.dispose();
                               break;
-                case "combo": new listaCombos(data(), loadData());
+                case "combo": new listaCombos(data(), loadData(),p.getName());
                               this.dispose();
                               break;
-                case "Traseros": new listaCombos(data(), loadData());
+                case "Traseros": new listaCombos(data(), loadData(),p.getName());
                               this.dispose();
                               break;
-                case "traseros": new listaCombos(data(), loadData());
+                case "traseros": new listaCombos(data(), loadData(),p.getName());
                               this.dispose();
                               break;
-                case "Delanteros": new listaCombos(data(), loadData());
+                case "Delanteros": new listaCombos(data(), loadData(),p.getName());
                               this.dispose();
                               break;
-                case "delanteros": new listaCombos(data(), loadData());
+                case "delanteros": new listaCombos(data(), loadData(),p.getName());
                               this.dispose();
                               break;
-                default: Producto p2 = (Producto) jComboBox4.getSelectedItem();
-                table.addRow(new Object[]{p2.getName(), "0", "0", "0", "0", new mEntradas().ultimoCosto(p.getName()), "1", "0"});
-                total();
-                partida = partida + 1;
+                default:           Producto p2 = (Producto) jComboBox4.getSelectedItem();
+                                   table.addRow(new Object[]{p2.getName(), "0", "0", "0", "0", new mEntradas().ultimoCosto(p.getName()), "1", "0"});
+                                   total();
+                break;
             }
-            if (p.getName().equals("combo") || p.getName().equals("Combo")) {
-                new listaCombos(data(), loadData());
-                this.dispose();
-            } else {
-                Producto p2 = (Producto) jComboBox4.getSelectedItem();
-                table.addRow(new Object[]{p2.getName(), "0", "0", "0", "0", new mEntradas().ultimoCosto(p.getName()), "1", "0"});
-                total();
-                partida = partida + 1;
-            }
+            partida = partida + 1;
         }
     }//GEN-LAST:event_jComboBox4KeyTyped
 

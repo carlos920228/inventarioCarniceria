@@ -57,7 +57,7 @@ ArrayList rows = new ArrayList();
         try {
             Statement sql = conexion.getConexion().createStatement();
             if(!rcp.equals("Todas")){
-                   ResultSet resultado = sql.executeQuery("select *from venta where fecha BETWEEN '"+ inicio + "' and '"+ fin+"' and estado='"+rcp+"'");
+                   ResultSet resultado = sql.executeQuery("select idventa, fecha, cliente, usuario, repartidor, round(total,2) as tota, estado, descuento from venta where fecha BETWEEN '"+ inicio + "' and '"+ fin+"' and estado='"+rcp+"'");
                    while (resultado.next()) {
                        ArrayList data=new ArrayList();
                         data.add(resultado.getString("idventa"));
@@ -65,12 +65,12 @@ ArrayList rows = new ArrayList();
                         data.add(resultado.getString("cliente"));
                         data.add(resultado.getString("usuario"));
                         data.add(resultado.getString("repartidor"));
-                        data.add(resultado.getString("total"));
+                        data.add(resultado.getString("tota"));
                         data.add(resultado.getString("estado"));
                         data.add(resultado.getString("descuento"));
                         rows.add(data);
                     }}else{
-                   ResultSet resultado = sql.executeQuery("select *from venta where fecha BETWEEN '"+ inicio + "' and '"+ fin+"'");
+                   ResultSet resultado = sql.executeQuery("select idventa, fecha, cliente, usuario, repartidor, round(total,2) as tota, estado, descuento from venta where fecha BETWEEN '"+ inicio + "' and '"+ fin+"'");
                    while (resultado.next()) {
                        ArrayList data=new ArrayList();
                         data.add(resultado.getString("idventa"));
@@ -78,7 +78,7 @@ ArrayList rows = new ArrayList();
                         data.add(resultado.getString("cliente"));
                         data.add(resultado.getString("usuario"));
                         data.add(resultado.getString("repartidor"));
-                        data.add(resultado.getString("total"));
+                        data.add(resultado.getString("tota"));
                         data.add(resultado.getString("estado"));
                         data.add(resultado.getString("descuento"));
                         rows.add(data);
@@ -125,5 +125,31 @@ ArrayList data=new ArrayList ();
        System.out.println("Error updateVentas()"+e);
    return false;
    } 
+}
+public ArrayList listSale(){
+ArrayList rows = new ArrayList();
+        Conexion conexion = new Conexion();
+        conexion.conectar();
+        try {
+            Statement sql = conexion.getConexion().createStatement();
+            
+                   ResultSet resultado = sql.executeQuery("select idventa, fecha, cliente, usuario, repartidor, round(total,2) as tota, estado, descuento from venta where estado='Pendiente'");
+                   while (resultado.next()) {
+                       ArrayList data=new ArrayList();
+                        data.add(resultado.getString("idventa"));
+                        data.add(resultado.getString("fecha"));
+                        data.add(resultado.getString("cliente"));
+                        data.add(resultado.getString("usuario"));
+                        data.add(resultado.getString("repartidor"));
+                        data.add(resultado.getString("tota"));
+                        data.add(resultado.getString("estado"));
+                        data.add(resultado.getString("descuento"));
+                        rows.add(data);
+                    }
+                        conexion.getConexion().close();
+        } catch (Exception e) {
+            System.out.println("Error reporte reporteVentas(): " + e);
+        }
+        return rows;
 }
 }

@@ -5,6 +5,8 @@
  */
 package Vista;
 
+import java.awt.Image;
+import java.awt.Toolkit;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import modelo.mUsuarios;
@@ -14,6 +16,9 @@ public class AgregarUsuario extends javax.swing.JFrame {
         initComponents();
         setVisible(true);
         setTitle("Agregar Usuario");
+        Image f= Toolkit.getDefaultToolkit().
+        getImage(ClassLoader.getSystemResource("image/caba_1.png"));
+        this.setIconImage(f);
     }
 
     @SuppressWarnings("unchecked")

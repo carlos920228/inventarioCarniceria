@@ -210,13 +210,13 @@ public class mEntradas {
      * id,partida,ketiqueta,#piezas, Merma, Costo,Fecha, Factura
      * @return ArrayList
      */
-    public ArrayList exisCombo(){
+    public ArrayList exisCombo(String producto){
     ArrayList combos=new ArrayList();
     Conexion conexion=new Conexion();
        conexion.conectar();
         try {
             Statement sql=conexion.getConexion().createStatement();
-            ResultSet result=sql.executeQuery("SELECT * FROM partida where producto='Combo' and estado<>'1'");
+            ResultSet result=sql.executeQuery("SELECT * FROM partida where producto='"+producto+"' and estado<>'1'");
             while(result.next()){
             ArrayList r=new ArrayList();
             r.add(false);
@@ -278,6 +278,7 @@ public class mEntradas {
                         data.add(resultado.getString("folio"));
                         data.add(resultado.getString("fecha"));
                         data.add(resultado.getString("total"));
+                        data.add(resultado.getString("estatus"));
                         rows.add(data);
             }
             conexion.getConexion().close();
@@ -285,5 +286,21 @@ public class mEntradas {
             System.out.println("Error reporte Facturas: " + e);
         }
         return rows;
+    }
+    
+    public boolean actualizarFactura(String id){
+    Conexion conexion=new Conexion();
+    conexion.conectar();
+    boolean f=false;
+    try {
+            Statement sql=conexion.getConexion().createStatement();
+            sql.execute("update compra set estatus ='Pagado' where idcompras='"+id+"'");
+            conexion.getConexion().close();
+            f=true;
+            return f;
+        } catch (Exception e) {
+            System.out.println("Error al actualizar factura: "+e);
+        }
+        return f;
     }
 }

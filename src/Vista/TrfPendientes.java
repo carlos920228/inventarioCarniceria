@@ -2,6 +2,8 @@ package Vista;
 
 import Controlador.Utilerias;
 import java.awt.Color;
+import java.awt.Image;
+import java.awt.Toolkit;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
@@ -27,6 +29,9 @@ public class TrfPendientes extends javax.swing.JFrame {
     public TrfPendientes() {
         initComponents();
         setTitle("Reporte Transferencias");
+        Image f= Toolkit.getDefaultToolkit().
+        getImage(ClassLoader.getSystemResource("image/caba_1.png"));
+        this.setIconImage(f);
         tabla = (DefaultTableModel) jTable1.getModel();
         this.setExtendedState(MAXIMIZED_BOTH);
         setVisible(true);

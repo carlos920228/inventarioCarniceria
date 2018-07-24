@@ -1,5 +1,7 @@
 package Vista;
 
+import java.awt.Image;
+import java.awt.Toolkit;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import modelo.mProductos;
@@ -13,6 +15,9 @@ public class Productos extends javax.swing.JFrame {
     public Productos() {
         initComponents();
         setVisible(true);
+        Image f= Toolkit.getDefaultToolkit().
+        getImage(ClassLoader.getSystemResource("image/caba_1.png"));
+        this.setIconImage(f);
         setTitle("Agregar Productos");
     }
 

@@ -6,6 +6,8 @@
 package Vista;
 
 import Controlador.Utilerias;
+import java.awt.Image;
+import java.awt.Toolkit;
 import java.util.ArrayList;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
@@ -24,6 +26,9 @@ DefaultTableModel table;
     int partida;
     public Venta() {
         initComponents();
+        Image f= Toolkit.getDefaultToolkit().
+        getImage(ClassLoader.getSystemResource("image/caba_1.png"));
+        this.setIconImage(f);
         setTitle("Ventas");
         setVisible(true);
         jTextField1.setText(new Controlador.Utilerias().fecha());
@@ -45,6 +50,9 @@ DefaultTableModel table;
     }
     public Venta(ArrayList tabla, ArrayList datos, ArrayList combos) {
         initComponents();
+        Image f= Toolkit.getDefaultToolkit().
+        getImage(ClassLoader.getSystemResource("image/caba_1.png"));
+        this.setIconImage(f);
         setTitle("Salidas");
         jTextField1.setText(new Controlador.Utilerias().fecha());
         loadProductList();
@@ -152,7 +160,8 @@ private void modificarSubTotal() {
             int error = 0;
             for (Object o : tab) {
                 ArrayList x = (ArrayList) o;
-                if (x.get(0).toString().equals("Combo")) { 
+                
+                if (x.get(0).toString().equals("Combo")||x.get(0).toString().equals("traseros")||x.get(0).toString().equals("delanteros")) { 
                     if (new mVentas().insertRowSale(x, id)) {
                         new mProductos().updateExistence("-" + x.get(5).toString(), x.get(0).toString());
                         new mProductos().updateCombo(x.get(8).toString());
@@ -383,14 +392,29 @@ private void modificarSubTotal() {
     private void jComboBox4KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jComboBox4KeyTyped
         if (evt.getKeyChar() == '\n') {
             Producto p = (Producto) jComboBox4.getSelectedItem();
-            if (p.getName().equals("combo") || p.getName().equals("Combo")) {
-                new listaCombos(data(), loadData(),"Venta");
-                this.dispose();
-            } else {
-                Producto p2 = (Producto) jComboBox4.getSelectedItem();
-                table.addRow(new Object[]{p2.getName(), "null", "1", "0", new mEntradas().ultimoCosto(p.getName()), "1", "0","0","0"});
-                total();
-                partida = partida + 1;
+             switch(p.getName()){
+                case "Combo": new listaCombos(data(), loadData(),"venta",p.getName());
+                              this.dispose();
+                              break;
+                case "combo": new listaCombos(data(), loadData(),"venta",p.getName());
+                              this.dispose();
+                              break;
+                case "Traseros": new listaCombos(data(), loadData(),"venta",p.getName());
+                              this.dispose();
+                              break;
+                case "traseros": new listaCombos(data(), loadData(),"venta",p.getName());
+                              this.dispose();
+                              break;
+                case "Delanteros": new listaCombos(data(), loadData(),"venta",p.getName());
+                              this.dispose();
+                              break;
+                case "delanteros": new listaCombos(data(), loadData(),"venta",p.getName());
+                              this.dispose();
+                              break;
+                default:           Producto p2 = (Producto) jComboBox4.getSelectedItem();
+                                   table.addRow(new Object[]{p2.getName(), "0", "0", "0", "0", new mEntradas().ultimoCosto(p.getName()), "1", "0","0"});
+                                   total();
+                break;
             }
         }
     }//GEN-LAST:event_jComboBox4KeyTyped
@@ -401,7 +425,10 @@ private void modificarSubTotal() {
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        saveRowsTrf();
+        if(validar()){
+        saveRowsTrf();}else{
+        JOptionPane.showMessageDialog(null,"Favor de revisar los precios, se encontraron anomalías");
+        }
     }//GEN-LAST:event_jButton4ActionPerformed
 private void loadTable(ArrayList da) {
         for (Object o : da) {
@@ -419,7 +446,7 @@ private void loadTableData(ArrayList da) {
             partida = partida + 1;
         }
     }
-    private Double total() {
+private Double total() {
         Double total = 0.0;
         for (int i = 0; i < this.jTable1.getRowCount(); i++) {
             if (table.getValueAt(i, 0).equals("Combo")) {
@@ -513,6 +540,16 @@ private void imprimirTicket(ArrayList productos, String folio) {
         Ticket.ImprimirDocumento();
         this.jTextField1.requestFocus();
     }
+private boolean validar(){
+    boolean b=true;
+    for (int i = 0; i < this.jTable1.getRowCount(); i++) {
+            Double d=Double.parseDouble(table.getValueAt(i, 6).toString());
+            if(d<10){
+            b=false;
+            }
+}
+return b;
+}
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton3;

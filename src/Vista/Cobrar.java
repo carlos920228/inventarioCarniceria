@@ -1,6 +1,8 @@
 
 package Vista;
 
+import java.awt.Image;
+import java.awt.Toolkit;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -16,6 +18,9 @@ public class Cobrar extends javax.swing.JFrame {
         this.setExtendedState(MAXIMIZED_BOTH);
         setVisible(true);
         llenar();
+        Image f= Toolkit.getDefaultToolkit().
+        getImage(ClassLoader.getSystemResource("image/caba_1.png"));
+        this.setIconImage(f);
     }
 
     @SuppressWarnings("unchecked")

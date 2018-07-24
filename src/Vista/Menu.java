@@ -1,10 +1,13 @@
 
 package Vista;
 
+import java.awt.Image;
+import java.awt.Toolkit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.ImageIcon;
 
 public class Menu extends javax.swing.JFrame {
     public Menu() {
@@ -12,7 +15,11 @@ public class Menu extends javax.swing.JFrame {
         setVisible(true);
         setTitle("Menú");
         setLocationRelativeTo(null);
+        Image f= Toolkit.getDefaultToolkit().
+        getImage(ClassLoader.getSystemResource("image/caba_1.png"));
+        this.setIconImage(f);
     }
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {

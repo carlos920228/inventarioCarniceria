@@ -2,6 +2,8 @@
 package Vista;
 
 import Controlador.Utilerias;
+import java.awt.Image;
+import java.awt.Toolkit;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -14,6 +16,9 @@ public class TRF extends javax.swing.JFrame {
 DefaultTableModel table;
     public TRF() {
         initComponents();
+        Image f= Toolkit.getDefaultToolkit().
+        getImage(ClassLoader.getSystemResource("image/caba_1.png"));
+        this.setIconImage(f);
         setTitle("Transferencias");
         table = (DefaultTableModel) jTable1.getModel();
         setVisible(true);
@@ -22,6 +27,9 @@ DefaultTableModel table;
     }
      public TRF(String id) {
         initComponents();
+        Image f= Toolkit.getDefaultToolkit().
+        getImage(ClassLoader.getSystemResource("image/caba_1.png"));
+        this.setIconImage(f);
         setTitle("Transferencias");
         table = (DefaultTableModel) jTable1.getModel();
         setVisible(true);
