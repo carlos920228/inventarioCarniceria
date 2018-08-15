@@ -212,4 +212,26 @@ public class mSalidas {
         return rows;
     }
 
+    public ArrayList reporteDetallado(String fechaInicio, String fechaFin, String sucursal){
+    ArrayList datas=new ArrayList();
+    //SELECT productosSalida.trf as folio, salidas.fecha, productosSalida.producto, productosSalida.cantidad, salidas.recepcion FROM `productosSalida`, salidas where salidas.destino='Rotonda' and salidas.folio=productosSalida.trf
+    Conexion conexion = new Conexion();
+        conexion.conectar();
+        try {
+            Statement sql = conexion.getConexion().createStatement();
+            ResultSet resultado = sql.executeQuery("SELECT productosSalida.trf as folio, salidas.fecha, productosSalida.producto, productosSalida.cantidad, salidas.recepcion FROM productosSalida, salidas where salidas.destino='"+sucursal+"' and salidas.folio=productosSalida.trf and salidas.fecha BETWEEN '"+ fechaInicio + "' and '"+ fechaFin+"' ");
+            while(resultado.next()){
+            ArrayList data=new ArrayList();
+                        data.add(resultado.getString("folio"));
+                        data.add(resultado.getString("fecha"));
+                        data.add(resultado.getString("producto"));
+                        data.add(resultado.getString("cantidad"));
+                        data.add(resultado.getString("recepcion"));
+                        datas.add(data);
+            }
+        }catch(Exception e){
+            System.out.println("Error al mostrar reporte detallado: "+e);
+        }
+    return datas;
+    }
 }

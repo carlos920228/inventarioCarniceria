@@ -1,6 +1,7 @@
 
 package modelo;
 
+import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
 
@@ -19,5 +20,21 @@ public class mClientes {
            return false;
        }
        
-   } 
+   }
+   public ArrayList clientesList(){
+   ArrayList data= new ArrayList();
+   Conexion conexion = new Conexion();
+        conexion.conectar();
+        try {
+            Statement sql = conexion.getConexion().createStatement();
+            ResultSet result = sql.executeQuery("select nombre from cliente");
+            while (result.next()) {
+               data.add(result.getString("nombre"));
+            }
+            conexion.getConexion().close();
+        } catch (Exception e) {
+            System.out.println("Error consult Repartidores List " + e);
+        }
+        return data;
+   }
 }

@@ -244,7 +244,7 @@ public class Salidas extends javax.swing.JFrame {
                 switch(x.get(0).toString()){
                 case "Combo": if (new mSalidas().insertRowDeparture(x, id)) {
                                   new mProductos().updateExistence("-" + x.get(6).toString(), x.get(0).toString());
-                                  new mProductos().updateCombo(x.get(7).toString());
+                                  new mProductos().updateCombo(x.get(7).toString(), jComboBox1.getSelectedItem().toString());
                                 } else {
                                   System.out.println("Error al insertar la partida combo " + x.get(6).toString() + " " + x.get(0).toString() + ", no se afecto la existecia");
                                   error = error + 1;
@@ -252,7 +252,7 @@ public class Salidas extends javax.swing.JFrame {
                               break;
                 case "combo": if (new mSalidas().insertRowDeparture(x, id)) {
                                   new mProductos().updateExistence("-" + x.get(6).toString(), x.get(0).toString());
-                                  new mProductos().updateCombo(x.get(7).toString());
+                                  new mProductos().updateCombo(x.get(7).toString(),jComboBox1.getSelectedItem().toString());
                                 } else {
                                   System.out.println("Error al insertar la partida combo " + x.get(6).toString() + " " + x.get(0).toString() + ", no se afecto la existecia");
                                   error = error + 1;
@@ -260,7 +260,7 @@ public class Salidas extends javax.swing.JFrame {
                               break;
                 case "Traseros": if (new mSalidas().insertRowDeparture(x, id)) {
                                   new mProductos().updateExistence("-" + x.get(6).toString(), x.get(0).toString());
-                                  new mProductos().updateCombo(x.get(7).toString());
+                                  new mProductos().updateCombo(x.get(7).toString(),jComboBox1.getSelectedItem().toString());
                                 } else {
                                   System.out.println("Error al insertar la partida combo " + x.get(6).toString() + " " + x.get(0).toString() + ", no se afecto la existecia");
                                   error = error + 1;
@@ -268,7 +268,7 @@ public class Salidas extends javax.swing.JFrame {
                               break;
                 case "traseros": if (new mSalidas().insertRowDeparture(x, id)) {
                                   new mProductos().updateExistence("-" + x.get(6).toString(), x.get(0).toString());
-                                  new mProductos().updateCombo(x.get(7).toString());
+                                  new mProductos().updateCombo(x.get(7).toString(),jComboBox1.getSelectedItem().toString());
                                 } else {
                                   System.out.println("Error al insertar la partida combo " + x.get(6).toString() + " " + x.get(0).toString() + ", no se afecto la existecia");
                                   error = error + 1;
@@ -276,7 +276,7 @@ public class Salidas extends javax.swing.JFrame {
                               break;
                 case "Delanteros": if (new mSalidas().insertRowDeparture(x, id)) {
                                   new mProductos().updateExistence("-" + x.get(6).toString(), x.get(0).toString());
-                                  new mProductos().updateCombo(x.get(7).toString());
+                                  new mProductos().updateCombo(x.get(7).toString(),jComboBox1.getSelectedItem().toString());
                                 } else {
                                   System.out.println("Error al insertar la partida combo " + x.get(6).toString() + " " + x.get(0).toString() + ", no se afecto la existecia");
                                   error = error + 1;
@@ -284,7 +284,7 @@ public class Salidas extends javax.swing.JFrame {
                               break;
                 case "delanteros": if (new mSalidas().insertRowDeparture(x, id)) {
                                   new mProductos().updateExistence("-" + x.get(6).toString(), x.get(0).toString());
-                                  new mProductos().updateCombo(x.get(7).toString());
+                                  new mProductos().updateCombo(x.get(7).toString(),jComboBox1.getSelectedItem().toString());
                                 } else {
                                   System.out.println("Error al insertar la partida combo " + x.get(6).toString() + " " + x.get(0).toString() + ", no se afecto la existecia");
                                   error = error + 1;

@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import modelo.mClientes;
 import modelo.mEntradas;
 import modelo.mProductos;
 import modelo.mRepartidor;
@@ -33,6 +34,7 @@ DefaultTableModel table;
         setVisible(true);
         jTextField1.setText(new Controlador.Utilerias().fecha());
         loadProductList();
+        loadClientes();
         chofer();
         partida = 1;
         table = (DefaultTableModel) jTable1.getModel();
@@ -56,6 +58,7 @@ DefaultTableModel table;
         setTitle("Salidas");
         jTextField1.setText(new Controlador.Utilerias().fecha());
         loadProductList();
+        loadClientes();
         chofer();
         table = (DefaultTableModel) jTable1.getModel();
         this.jTable1.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -71,11 +74,18 @@ DefaultTableModel table;
         loadTableData(tabla);
         loadTable(combos);
         jComboBox3.setSelectedIndex((int) datos.get(0));
-        this.jTextField2.setText(datos.get(2).toString());
+        jComboBox1.setSelectedIndex((int)datos.get(2));
         this.combos = combos;
         this.setExtendedState(MAXIMIZED_BOTH);
 
     }
+private void loadClientes(){
+jComboBox1.removeAllItems();
+ ArrayList products = new mClientes().clientesList();
+        for (Object o : products) {
+            jComboBox1.addItem(o.toString());
+        }
+}
 private ArrayList loadData() {
         ArrayList data = new ArrayList();
         for (int i = 0; i < this.jTable1.getRowCount(); i++) {
@@ -116,14 +126,14 @@ private void modificarSubTotal() {
         ArrayList data = new ArrayList();
         data.add(jComboBox3.getSelectedIndex());
         data.add(total());
-        data.add(jTextField2.getText());
+        data.add(jComboBox1.getSelectedIndex());
         return data;
     }
 
     private ArrayList dataInsert() {
         ArrayList data = new ArrayList();
         Producto chofer = (Producto) jComboBox3.getSelectedItem();
-        data.add(jTextField2.getText());//cliente
+        data.add(jComboBox1.getSelectedItem().toString());//cliente
         data.add(chofer.getName());//repartidor
         data.add(total());//total
         return data;
@@ -164,7 +174,7 @@ private void modificarSubTotal() {
                 if (x.get(0).toString().equals("Combo")||x.get(0).toString().equals("traseros")||x.get(0).toString().equals("delanteros")) { 
                     if (new mVentas().insertRowSale(x, id)) {
                         new mProductos().updateExistence("-" + x.get(5).toString(), x.get(0).toString());
-                        new mProductos().updateCombo(x.get(8).toString());
+                        new mProductos().updateCombo(x.get(8).toString(),jComboBox1.getSelectedItem().toString());
                     } else {
                         System.out.println("Error al insertar la partida combo " + x.get(6).toString() + " " + x.get(0).toString() + ", no se afecto la existecia");
                         error = error + 1;
@@ -195,7 +205,7 @@ private void modificarSubTotal() {
             this.table.removeRow(i);
         }
         jLabel9.setText("0.0");
-        this.jTextField2.setText("");
+        
     }
     
     @SuppressWarnings("unchecked")
@@ -218,7 +228,7 @@ private void modificarSubTotal() {
         jButton4 = new javax.swing.JButton();
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
+        jComboBox1 = new javax.swing.JComboBox<>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -293,7 +303,8 @@ private void modificarSubTotal() {
         jLabel9.setFont(new java.awt.Font("Tahoma", 3, 48)); // NOI18N
         jLabel9.setText("0.0");
 
-        jTextField2.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jComboBox1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -324,16 +335,15 @@ private void modificarSubTotal() {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                                 .addGap(115, 115, 115)
-                                .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, 184, Short.MAX_VALUE)
                                 .addGap(207, 207, 207))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jComboBox4, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGroup(jPanel1Layout.createSequentialGroup()
-                                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                    .addComponent(jLabel4)
-                                    .addGap(43, 43, 43)
-                                    .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(jComboBox4, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jLabel4)
+                                .addGap(18, 18, 18)
+                                .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(33, 33, 33))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(310, 310, 310)
@@ -346,13 +356,14 @@ private void modificarSubTotal() {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jTextField1)
-                    .addComponent(jComboBox3)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel1)
-                        .addComponent(jLabel4)
+                        .addComponent(jTextField1)
                         .addComponent(jLabel3))
-                    .addComponent(jTextField2))
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jComboBox3)
+                        .addComponent(jLabel4))
+                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
@@ -473,7 +484,7 @@ private void imprimirTicket(ArrayList productos, String folio) {
         java.text.SimpleDateFormat fecha = new java.text.SimpleDateFormat("dd/MM/yyyy");
         java.text.SimpleDateFormat hora = new java.text.SimpleDateFormat("hh:mm:ss aa");
         Ticket.AddCabecera(Ticket.DarEspacio());
-          Ticket.AddSubCabecera("Cliente:  " + jTextField2.getText());
+          Ticket.AddSubCabecera("Cliente:  " + jComboBox1.getSelectedItem().toString());
         Ticket.AddSubCabecera(Ticket.DarEspacio());
         Ticket.AddSubCabecera(Ticket.DarEspacio());
         Ticket.AddCabecera(new Utilerias().local());
@@ -554,6 +565,7 @@ return b;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
+    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JComboBox<String> jComboBox3;
     private javax.swing.JComboBox<String> jComboBox4;
     private javax.swing.JLabel jLabel1;
@@ -568,6 +580,5 @@ return b;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
     // End of variables declaration//GEN-END:variables
 }

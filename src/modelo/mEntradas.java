@@ -4,6 +4,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 public class mEntradas {
 
@@ -12,7 +13,7 @@ public class mEntradas {
         conexion.conectar();
         try {
             Statement sql=conexion.getConexion().createStatement();
-            ResultSet result=sql.executeQuery("select count(*)+1 as total from compra");
+            ResultSet result=sql.executeQuery("select idcompras+1 as total from compra order by idcompras desc limit 1");
             result.next();
             return result.getString("total");
         } catch (Exception e) {
@@ -30,7 +31,7 @@ public class mEntradas {
         conexion.conectar();
         try {
          Statement sql=conexion.getConexion().createStatement();
-         sql.executeUpdate("insert into compra(idcompras,folio,fecha,proveedor,total,MermaTotal,sellos) values('"+datos.get(6)+"','"+datos.get(0)+"','"+datos.get(1)+"','"+datos.get(2)+"','"+datos.get(3)+"','"+datos.get(4)+"','"+datos.get(5)+"')");
+         sql.executeUpdate("insert into compra(idcompras,folio,fecha,proveedor,total,MermaTotal,sellos,totalKilos) values('"+datos.get(6)+"','"+datos.get(0)+"','"+datos.get(1)+"','"+datos.get(2)+"','"+datos.get(3)+"','"+datos.get(4)+"','"+datos.get(5)+"','"+datos.get(7)+"')");
         return true;
         }catch(Exception e){
             System.out.println("Error al insertar compra: "+e);
@@ -70,7 +71,6 @@ public class mEntradas {
         return false;
     } 
     } 
-    
     public ArrayList dataBuyLatest(){
     ArrayList data=buyLatest();
      ArrayList rows=new ArrayList();
@@ -93,6 +93,7 @@ public class mEntradas {
             r.add(result.getString("costo"));
             r.add(result.getString("fecha"));
             r.add(result.getString("cantidadProducto"));
+            r.add(result.getString("numtrf"));
             rows.add(r);
             }
             conexion.getConexion().close();
@@ -129,6 +130,7 @@ public class mEntradas {
             r.add(result.getString("costo"));
             r.add(result.getString("fecha"));
             r.add(result.getString("cantidadProducto"));
+            r.add(result.getString("numtrf"));
             rows.add(r);
             }
             conexion.getConexion().close();
@@ -278,6 +280,7 @@ public class mEntradas {
                         data.add(resultado.getString("folio"));
                         data.add(resultado.getString("fecha"));
                         data.add(resultado.getString("total"));
+                        data.add(resultado.getString("totalKilos"));
                         data.add(resultado.getString("estatus"));
                         rows.add(data);
             }
@@ -287,7 +290,6 @@ public class mEntradas {
         }
         return rows;
     }
-    
     public boolean actualizarFactura(String id){
     Conexion conexion=new Conexion();
     conexion.conectar();
@@ -302,5 +304,34 @@ public class mEntradas {
             System.out.println("Error al actualizar factura: "+e);
         }
         return f;
+    }
+    public ArrayList facturasMesCurso(){
+    ArrayList rows=new ArrayList();
+    Calendar fecha = Calendar.getInstance();
+        int año = fecha.get(Calendar.YEAR);
+        int mes = fecha.get(Calendar.MONTH) + 1;    
+        Conexion conexion = new Conexion();
+        conexion.conectar();
+        try {
+            Statement sql = conexion.getConexion().createStatement();
+                  ResultSet resultado = sql.executeQuery("SELECT * FROM compra WHERE MONTH(fecha) ='"+mes+"' AND YEAR(fecha) ='"+año+"' order by idcompras desc");
+                   while (resultado.next()) {
+                        ArrayList data=new ArrayList();
+                        data.add(resultado.getString("idcompras"));
+                        data.add(resultado.getString("proveedor"));
+                        data.add(resultado.getString("sellos"));
+                        data.add(resultado.getString("folio"));
+                        data.add(resultado.getString("fecha"));
+                        data.add(resultado.getString("total"));
+                        System.out.println(resultado.getString("totalKilos"));
+                        data.add(String.format("%.2f",Float.parseFloat(resultado.getString("totalKilos"))));
+                        data.add(resultado.getString("estatus"));
+                        rows.add(data);
+            }
+            conexion.getConexion().close();
+        } catch (Exception e) {
+            System.out.println("Error reporte Facturas: " + e);
+        }
+    return rows;
     }
 }

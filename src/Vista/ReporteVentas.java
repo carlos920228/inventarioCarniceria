@@ -293,13 +293,11 @@ private void loadTable(ArrayList rows) {
         total();
     }
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        if(tabla.getValueAt(jTable1.getSelectedRow(),6).equals("Pagado")){
+          if(tabla.getValueAt(jTable1.getSelectedRow(),6).equals("Pagado")){
         JOptionPane.showMessageDialog(null,"Error, la venta ya fue cobrada");
         }else{
         new Cobrar(cobrar());
         this.dispose();}
-        
-
     }//GEN-LAST:event_jButton4ActionPerformed
 public void filtro() {
         trsfiltro.setRowFilter(RowFilter.regexFilter(jTextField1.getText(), 2));

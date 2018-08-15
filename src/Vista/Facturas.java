@@ -22,13 +22,15 @@ DefaultTableModel table;
     public Facturas() {
         initComponents();
         setTitle("Entradas a inventario");
-        setVisible(true);
-        table=(DefaultTableModel)jTable1.getModel();
-        loadBuy();
-        this.setExtendedState(MAXIMIZED_BOTH);
         Image f= Toolkit.getDefaultToolkit().
         getImage(ClassLoader.getSystemResource("image/caba_1.png"));
         this.setIconImage(f);
+        table=(DefaultTableModel)jTable1.getModel();
+        if(new Utilerias().permiso().equals("1")){
+        table.addColumn("Enviado a");}
+        loadBuy();
+        this.setExtendedState(MAXIMIZED_BOTH);
+        setVisible(true);
     }
     public Facturas(String id) {
         initComponents();
@@ -38,6 +40,8 @@ DefaultTableModel table;
         setTitle("Entradas a inventario");
         setVisible(true);
         table=(DefaultTableModel)jTable1.getModel();
+        if(new Utilerias().permiso().equals("1")){
+        table.addColumn("Enviado a");}
         loadBuy(id);
         this.setExtendedState(MAXIMIZED_BOTH);
     }
@@ -88,6 +92,32 @@ DefaultTableModel table;
             }
         });
         jScrollPane1.setViewportView(jTable1);
+        if (jTable1.getColumnModel().getColumnCount() > 0) {
+            jTable1.getColumnModel().getColumn(1).setMinWidth(50);
+            jTable1.getColumnModel().getColumn(1).setPreferredWidth(50);
+            jTable1.getColumnModel().getColumn(1).setMaxWidth(50);
+            jTable1.getColumnModel().getColumn(2).setMinWidth(100);
+            jTable1.getColumnModel().getColumn(2).setPreferredWidth(100);
+            jTable1.getColumnModel().getColumn(2).setMaxWidth(100);
+            jTable1.getColumnModel().getColumn(3).setMinWidth(70);
+            jTable1.getColumnModel().getColumn(3).setPreferredWidth(70);
+            jTable1.getColumnModel().getColumn(3).setMaxWidth(70);
+            jTable1.getColumnModel().getColumn(4).setMinWidth(50);
+            jTable1.getColumnModel().getColumn(4).setPreferredWidth(50);
+            jTable1.getColumnModel().getColumn(4).setMaxWidth(50);
+            jTable1.getColumnModel().getColumn(5).setMinWidth(80);
+            jTable1.getColumnModel().getColumn(5).setPreferredWidth(80);
+            jTable1.getColumnModel().getColumn(5).setMaxWidth(80);
+            jTable1.getColumnModel().getColumn(6).setMinWidth(70);
+            jTable1.getColumnModel().getColumn(6).setPreferredWidth(70);
+            jTable1.getColumnModel().getColumn(6).setMaxWidth(70);
+            jTable1.getColumnModel().getColumn(7).setMinWidth(50);
+            jTable1.getColumnModel().getColumn(7).setPreferredWidth(50);
+            jTable1.getColumnModel().getColumn(7).setMaxWidth(50);
+            jTable1.getColumnModel().getColumn(8).setMinWidth(50);
+            jTable1.getColumnModel().getColumn(8).setPreferredWidth(50);
+            jTable1.getColumnModel().getColumn(8).setMaxWidth(50);
+        }
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel1.setText("Folio");

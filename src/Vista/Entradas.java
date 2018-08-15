@@ -280,8 +280,10 @@ public class Entradas extends javax.swing.JFrame {
     }//GEN-LAST:event_jComboBox2KeyTyped
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        System.out.println("Valor total: "+jLabel7.getText());
         if(!jLabel7.getText().equals("0.0")){
-        insert();}else{
+        insert();
+        }else{
             JOptionPane.showMessageDialog(null,"No se puede guardar una factura en ceros");
         }
             
@@ -327,6 +329,7 @@ public class Entradas extends javax.swing.JFrame {
     }
     return data;
     }
+    
     private Double total() {
         Double total = 0.0;
         float merma=0.0F;
@@ -342,6 +345,16 @@ public class Entradas extends javax.swing.JFrame {
         this.jLabel6.setText(Float.toString(merma));
         return total;
     }
+    private Double totalKilos() {
+        Double total = 0.0;
+        float merma=0.0F;
+        for (int i = 0; i < this.jTable1.getRowCount(); i++) {
+            if(table.getValueAt(i, 8)!=null){
+            float cantidad = Float.parseFloat(this.table.getValueAt(i, 2).toString());
+            total +=cantidad;
+        }}
+        return total;
+    }
     private void insert(){
     ArrayList<String> data=new ArrayList();
     data.add(jTextField4.getText());
@@ -351,6 +364,7 @@ public class Entradas extends javax.swing.JFrame {
     data.add(jLabel6.getText());
     data.add(jTextField3.getText());
     data.add(jTextField1.getText());
+    data.add(totalKilos().toString());
     ArrayList rows=loadData();
     if(new mEntradas().insertBuy(data)){
         for (Object o:rows) {

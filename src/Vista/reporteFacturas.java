@@ -58,9 +58,11 @@ public class reporteFacturas extends javax.swing.JFrame {
         tabla.addColumn("Estatus");
         jButton5.setVisible(true);
         jButton5.setEnabled(true);
-        RenderRow rr = new RenderRow(6);
+        RenderRow rr = new RenderRow(7);
         jTable1.setDefaultRenderer(Object.class, rr);
         //add(new JScrollPane(jTable1));
+        loadTable(new mEntradas().facturasMesCurso());
+        
         }
         
     }
@@ -131,11 +133,11 @@ private void total() {
 
             },
             new String [] {
-                "id", "Proveedor", "Sellos", "Folio", "Fecha", "Total"
+                "id", "Proveedor", "Sellos", "Folio", "Fecha", "Total", "Total kilos"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false
+                false, false, false, false, false, false, true
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -315,7 +317,7 @@ private void total() {
          String id=jTable1.getValueAt(jTable1.getSelectedRow(),0).toString();
         if(new mEntradas().actualizarFactura(id)){
         JOptionPane.showMessageDialog(null,"Marcada Correctamente");
-        tabla.setValueAt("Pagado",jTable1.getSelectedRow(),6);
+        tabla.setValueAt("Pagado",jTable1.getSelectedRow(),7);
         
         
         }else{

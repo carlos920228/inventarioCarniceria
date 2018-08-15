@@ -1,5 +1,6 @@
 package modelo;
 
+import Controlador.Utilerias;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
@@ -68,12 +69,12 @@ conexion.conectar();
  * @param id
  * @return 
  */
-public boolean updateCombo(String id){
+public boolean updateCombo(String id, String destino){
 Conexion conexion=new Conexion();
 conexion.conectar();
     try {
         Statement sql=conexion.getConexion().createStatement();
-        sql.executeUpdate("update partida set estado='1' where idPartida='"+id+"'");
+        sql.executeUpdate("update partida set estado='1', numtrf='"+destino+" "+new Utilerias().fecha()+"' where idPartida='"+id+"'");
         conexion.getConexion().close();
         return true;
     } catch (Exception e) {

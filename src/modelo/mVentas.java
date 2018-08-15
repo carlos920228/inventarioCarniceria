@@ -89,6 +89,32 @@ ArrayList rows = new ArrayList();
         }
         return rows;
 }
+public ArrayList listSale(String cliente){
+ArrayList rows = new ArrayList();
+        Conexion conexion = new Conexion();
+        conexion.conectar();
+        try {
+            Statement sql = conexion.getConexion().createStatement();
+            ResultSet resultado = sql.executeQuery("select idventa, fecha, cliente,IFNULL(observacion,'N/A') as observ, usuario, repartidor, round(total,2) as tota, estado, descuento from venta where cliente='"+cliente+"'");
+                   while (resultado.next()) {
+                       ArrayList data=new ArrayList();
+                        data.add(resultado.getString("idventa"));
+                        data.add(resultado.getString("usuario"));
+                        data.add(resultado.getString("cliente"));
+                        data.add(resultado.getString("repartidor"));
+                        data.add(resultado.getString("tota"));
+                        data.add(resultado.getString("descuento"));
+                        data.add(resultado.getString("observ"));
+                        data.add(resultado.getString("fecha"));
+                        data.add(resultado.getString("estado"));
+                        rows.add(data);
+                    }
+                                conexion.getConexion().close();
+        } catch (Exception e) {
+            System.out.println("Error reporte reporteVentas() por cliente: " + e);
+        }
+        return rows;
+}
 public ArrayList recuperarVenta(String id){
    ArrayList data=new ArrayList ();
    Conexion conexion = new Conexion();
