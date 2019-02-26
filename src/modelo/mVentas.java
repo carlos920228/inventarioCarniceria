@@ -134,10 +134,31 @@ public ArrayList recuperarVenta(String id){
    row.add(resultado.getString("merma"));
    row.add(resultado.getString("precio"));
    row.add(resultado.getString("subTotal"));
+   row.add(resultado.getString("mermareportada"));
    data.add(row);
    }
    }catch(Exception e){
        System.out.println("Error recuperarVenta()"+e);
+   }
+           return data; 
+}
+public ArrayList recuperarMetaDatosVenta(String id){
+   ArrayList data=new ArrayList ();
+   Conexion conexion = new Conexion();
+   conexion.conectar();
+   try{
+   PreparedStatement sql = conexion.getConexion().prepareStatement("select *from venta where idventa='"+id+"'");
+   ResultSet resultado=sql.executeQuery();
+   while(resultado.next()){
+   ArrayList row=new ArrayList();
+   data.add(resultado.getString("fecha"));
+   data.add(resultado.getString("cliente"));
+   data.add(resultado.getString("repartidor"));
+   data.add(resultado.getString("usuario"));
+   data.add(resultado.getString("total"));
+   }
+   }catch(Exception e){
+       System.out.println("Error recuperarMetaDatosVenta()"+e);
    }
            return data; 
 }

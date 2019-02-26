@@ -77,11 +77,11 @@ public class Cobrar extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Producto", "Partida", "K Etiqueta", "# Piezas", "Costo", "Cantidad", "Merma", "Precio Venta", "Total"
+                "Producto", "Partida", "K Etiqueta", "# Piezas", "Costo", "Cantidad", "Merma", "Precio Venta", "Total", "Merma Reportada"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, true, true, false, true, false, true, false
+                false, false, false, false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {

@@ -9,16 +9,15 @@ import javax.swing.table.DefaultTableModel;
 import modelo.mVentas;
 import pruebatiket.Ticket;
 
-public class verVenta extends javax.swing.JFrame {
+public class RegistrarMermaVenta extends javax.swing.JFrame {
     ArrayList data;
     DefaultTableModel table;
-    public verVenta(ArrayList data) {
+    public RegistrarMermaVenta() {
         initComponents();
         this.data=data;
         table=(DefaultTableModel)jTable1.getModel();
         this.setExtendedState(MAXIMIZED_BOTH);
         setVisible(true);
-        llenar();
         Image f= Toolkit.getDefaultToolkit().
         getImage(ClassLoader.getSystemResource("image/caba_1.png"));
         this.setIconImage(f);
@@ -43,8 +42,9 @@ public class verVenta extends javax.swing.JFrame {
         jLabel7 = new javax.swing.JLabel();
         jButton3 = new javax.swing.JButton();
         jLabel9 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
+        jTextField4 = new javax.swing.JTextField();
+        jButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -107,13 +107,21 @@ public class verVenta extends javax.swing.JFrame {
         jLabel9.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel9.setText("Folio");
 
-        jLabel8.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel8.setText("jLabel8");
-
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/impresora.png"))); // NOI18N
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/save.png"))); // NOI18N
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
+            }
+        });
+
+        jTextField4.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jTextField4.setText("0");
+
+        jButton2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jButton2.setText("Cargar");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
             }
         });
 
@@ -150,14 +158,16 @@ public class verVenta extends javax.swing.JFrame {
                                     .addComponent(jLabel3)
                                     .addComponent(jLabel9))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jTextField2, javax.swing.GroupLayout.DEFAULT_SIZE, 151, Short.MAX_VALUE)
+                                    .addComponent(jTextField4))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                         .addComponent(jLabel4)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                         .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(jButton2))
                                 .addGap(0, 0, Short.MAX_VALUE))
                             .addComponent(jScrollPane1))
                         .addContainerGap())))
@@ -184,7 +194,8 @@ public class verVenta extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel9)
-                            .addComponent(jLabel8))))
+                            .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton2))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 348, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -218,15 +229,17 @@ public class verVenta extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        new HistorialCliente();
+        new Menu();
         this.dispose();
     }//GEN-LAST:event_jButton3ActionPerformed
-
+ 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         ArrayList tab = loadData();
-        imprimirTicket(tab,jLabel8.getText());
-        imprimirTicket(tab,jLabel8.getText());
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    llenar();
+    }//GEN-LAST:event_jButton2ActionPerformed
 private ArrayList loadData() {
         ArrayList data = new ArrayList();
         for (int i = 0; i < this.jTable1.getRowCount(); i++) {
@@ -245,17 +258,16 @@ private ArrayList loadData() {
         return data;
     }
     private void llenar(){
-jTextField1.setText(data.get(7).toString());//Fecha
-jTextField2.setText(data.get(2).toString());//Cliente
-jTextField3.setText(data.get(3).toString());//chofer
-jLabel5.setText(data.get(1).toString());//Usuario
+data=new mVentas().recuperarMetaDatosVenta(jTextField4.getText());
+jTextField1.setText(data.get(0).toString());//Fecha
+jTextField2.setText(data.get(1).toString());//Cliente
+jTextField3.setText(data.get(2).toString());//chofer
+jLabel5.setText(data.get(3).toString());//Usuario
 jLabel7.setText(data.get(4).toString());//Total
-jLabel8.setText(data.get(0).toString());//Folio
-ArrayList tab=new mVentas().recuperarVenta(data.get(0).toString());
+ArrayList tab=new mVentas().recuperarVenta(jTextField4.getText());
     for (Object o:tab) {
         ArrayList x=(ArrayList)o;
-        table.addRow(x.toArray());
-    }
+        table.addRow(x.toArray());}
 }
 private void imprimirTicket(ArrayList productos, String folio) {
         java.util.Date date = new java.util.Date();
@@ -332,6 +344,7 @@ private void imprimirTicket(ArrayList productos, String folio) {
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -340,7 +353,6 @@ private void imprimirTicket(ArrayList productos, String folio) {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
@@ -348,5 +360,6 @@ private void imprimirTicket(ArrayList productos, String folio) {
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
+    private javax.swing.JTextField jTextField4;
     // End of variables declaration//GEN-END:variables
 }

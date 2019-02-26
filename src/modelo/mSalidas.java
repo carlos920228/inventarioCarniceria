@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
+import javax.swing.JOptionPane;
 
 public class mSalidas {
 
@@ -103,6 +104,7 @@ public class mSalidas {
                 ResultSet result = sql.executeQuery("SELECT * FROM productosSalida where trf='" + id + "'");
                 while (result.next()) {
                     ArrayList r = new ArrayList();
+                    r.add(result.getString("id"));
                     r.add(result.getString("producto"));
                     r.add(result.getString("partida"));
                     r.add(result.getString("kilos"));
@@ -110,6 +112,7 @@ public class mSalidas {
                     r.add(result.getString("merma"));
                     r.add(result.getString("costo"));
                     r.add(result.getString("cantidad"));
+                    r.add(result.getString("mermareportada"));
                     rows.add(r);
                 }
                 conexion.getConexion().close();
@@ -233,5 +236,19 @@ public class mSalidas {
             System.out.println("Error al mostrar reporte detallado: "+e);
         }
     return datas;
+    }
+    
+    public void actualizarMerma(String id, String merma){
+    Conexion conexion=new Conexion();
+conexion.conectar();
+    try {
+        Statement sql=conexion.getConexion().createStatement();
+        sql.executeUpdate("update productossalida set mermareportada='"+merma+"' where id='"+id+"'");
+        conexion.getConexion().close();
+        
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(null,"Erro al afectar mermareportada trf,enviar foto a sistemas: "+e);
+        
+    }
     }
 }
