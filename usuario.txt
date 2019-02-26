@@ -1,1 +1,5 @@
+<<<<<<< HEAD
 Carlos
+=======
+Juan Caiceros
+>>>>>>> origin/master

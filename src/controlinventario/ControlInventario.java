@@ -1,5 +1,6 @@
 
 package controlinventario;
+
 import Vista.Acceso;
 import Vista.Menu;
 import de.javasoft.plaf.synthetica.SyntheticaBlackEyeLookAndFeel;
@@ -36,8 +37,4 @@ public class ControlInventario {
             java.util.logging.Logger.getLogger(Menu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         Acceso inicio=new Acceso();
-        inicio.setLocationRelativeTo(null);
- 
-    }
-    
-}
+}}
