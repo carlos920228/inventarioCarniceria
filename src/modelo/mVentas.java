@@ -125,6 +125,7 @@ public ArrayList recuperarVenta(String id){
    ResultSet resultado=sql.executeQuery();
    while(resultado.next()){
    ArrayList row=new ArrayList();
+   row.add(resultado.getString("idpruducto_venta"));
    row.add(resultado.getString("producto"));
    row.add(resultado.getString("partida"));
    row.add(resultado.getString("kilos"));
@@ -172,6 +173,19 @@ ArrayList data=new ArrayList ();
        return true;
    }catch(Exception e){
        System.out.println("Error updateVentas()"+e);
+   return false;
+   } 
+}
+public boolean updateMerma(String descuento, String id){
+ArrayList data=new ArrayList ();
+   Conexion conexion = new Conexion();
+   conexion.conectar();
+   try{
+       PreparedStatement sql = conexion.getConexion().prepareStatement("update pruducto_venta set mermaReportada='"+descuento+"' where idpruducto_venta='"+id+"'");
+       sql.execute();
+       return true;
+   }catch(Exception e){
+       System.out.println("Error updateMermaVentas()"+e);
    return false;
    } 
 }

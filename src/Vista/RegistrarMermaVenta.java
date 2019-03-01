@@ -78,11 +78,11 @@ public class RegistrarMermaVenta extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Producto", "Partida", "K Etiqueta", "# Piezas", "Costo", "Cantidad", "Merma", "Precio Venta", "Total", "Merma Reportada"
+                "id", "Producto", "Partida", "K Etiqueta", "# Piezas", "Costo", "Cantidad", "Merma", "Precio Venta", "Total", "Merma Reportada"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false, false, false, true
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -90,6 +90,10 @@ public class RegistrarMermaVenta extends javax.swing.JFrame {
             }
         });
         jScrollPane1.setViewportView(jTable1);
+        if (jTable1.getColumnModel().getColumnCount() > 0) {
+            jTable1.getColumnModel().getColumn(0).setResizable(false);
+            jTable1.getColumnModel().getColumn(0).setPreferredWidth(30);
+        }
 
         jLabel6.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel6.setText("Total");
@@ -238,27 +242,28 @@ public class RegistrarMermaVenta extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-    llenar();
+        reset();
+        llenar();
     }//GEN-LAST:event_jButton2ActionPerformed
 private ArrayList loadData() {
         ArrayList data = new ArrayList();
         for (int i = 0; i < this.jTable1.getRowCount(); i++) {
-            ArrayList row = new ArrayList();
-            row.add(table.getValueAt(i, 0).toString());
-            row.add(table.getValueAt(i, 1).toString());
-            row.add(table.getValueAt(i, 2).toString());
-            row.add(table.getValueAt(i, 3).toString());
-            row.add(table.getValueAt(i, 4).toString());
-            row.add(table.getValueAt(i, 5).toString());
-            row.add(table.getValueAt(i, 6).toString());
-            row.add(table.getValueAt(i, 7).toString());
-            row.add(table.getValueAt(i, 7).toString());
-            data.add(row);
+            if(!table.getValueAt(i, 10).toString().equals("0")){
+            new mVentas().updateMerma(table.getValueAt(i, 10).toString(),table.getValueAt(i,0).toString());
+            }
         }
+        JOptionPane.showMessageDialog(null,"Venta modificada");
         return data;
     }
-    private void llenar(){
+private void reset(){
+int a = this.table.getRowCount() - 1;
+         for (int i = a; i >= 0; i--) {
+          this.table.removeRow(i);
+      }
+}
+private void llenar(){
 data=new mVentas().recuperarMetaDatosVenta(jTextField4.getText());
+if(!data.isEmpty()){
 jTextField1.setText(data.get(0).toString());//Fecha
 jTextField2.setText(data.get(1).toString());//Cliente
 jTextField3.setText(data.get(2).toString());//chofer
@@ -267,7 +272,7 @@ jLabel7.setText(data.get(4).toString());//Total
 ArrayList tab=new mVentas().recuperarVenta(jTextField4.getText());
     for (Object o:tab) {
         ArrayList x=(ArrayList)o;
-        table.addRow(x.toArray());}
+        table.addRow(x.toArray());}}
 }
 private void imprimirTicket(ArrayList productos, String folio) {
         java.util.Date date = new java.util.Date();
