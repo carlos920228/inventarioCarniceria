@@ -314,6 +314,7 @@ reset();
 ArrayList rows=new mSalidas().dataBuyLatest(id);
 for(Object o:rows){
 ArrayList r=(ArrayList)o;
+r.remove(0);
 table.addRow(r.toArray());
 }
 }

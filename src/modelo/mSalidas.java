@@ -243,7 +243,7 @@ public class mSalidas {
 conexion.conectar();
     try {
         Statement sql=conexion.getConexion().createStatement();
-        sql.executeUpdate("update productossalida set mermareportada='"+merma+"' where id='"+id+"'");
+        sql.executeUpdate("update productosSalida set mermareportada='"+merma+"' where id='"+id+"'");
         conexion.getConexion().close();
         
     } catch (Exception e) {
