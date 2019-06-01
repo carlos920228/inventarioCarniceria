@@ -17,7 +17,7 @@ public Component getTableCellRendererComponent (JTable table, Object value, bool
     setBackground(Color.white);
     table.setForeground(Color.black);
     super.getTableCellRendererComponent(table, value, selected, focused, row, column);
-    if(table.getValueAt(row,columna).equals("Pagado"))
+    if(table.getValueAt(row,columna).equals("Pagado") || table.getValueAt(row,columna).equals("Cancelado"))
     {
         this.setForeground(Color.RED);
     }else{

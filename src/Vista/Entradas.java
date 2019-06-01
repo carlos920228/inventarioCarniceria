@@ -75,9 +75,16 @@ public class Entradas extends javax.swing.JFrame {
                 "Partida", "Producto", "K Etiqueta", "# Piezas", "Libras", "Peso Bascula", "Peso muerto", "Merma", "Costo", "Cantida Producto"
             }
         ) {
+            Class[] types = new Class [] {
+                java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Double.class
+            };
             boolean[] canEdit = new boolean [] {
                 false, false, true, true, true, true, true, true, true, true
             };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];

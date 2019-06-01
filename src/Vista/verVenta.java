@@ -6,14 +6,17 @@ import java.awt.Toolkit;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import modelo.mProductos;
 import modelo.mVentas;
 import pruebatiket.Ticket;
 
 public class verVenta extends javax.swing.JFrame {
     ArrayList data;
     DefaultTableModel table;
+    String mode;
     public verVenta(ArrayList data) {
         initComponents();
+        mode="good";
         this.data=data;
         table=(DefaultTableModel)jTable1.getModel();
         this.setExtendedState(MAXIMIZED_BOTH);
@@ -45,6 +48,7 @@ public class verVenta extends javax.swing.JFrame {
         jLabel9 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -78,11 +82,11 @@ public class verVenta extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Producto", "Partida", "K Etiqueta", "# Piezas", "Costo", "Cantidad", "Merma", "Precio Venta", "Total", "Merma Reportada"
+                "Producto", "Partida", "K Etiqueta", "# Piezas", "Costo", "Cantidad", "Merma", "Precio Venta", "Total", "Merma Reportada", "id"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -117,6 +121,13 @@ public class verVenta extends javax.swing.JFrame {
             }
         });
 
+        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/cancelar.png"))); // NOI18N
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -128,7 +139,9 @@ public class verVenta extends javax.swing.JFrame {
                         .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(371, 371, 371)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(255, 255, 255)
                         .addComponent(jLabel6)
                         .addGap(58, 58, 58)
                         .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -186,7 +199,7 @@ public class verVenta extends javax.swing.JFrame {
                             .addComponent(jLabel9)
                             .addComponent(jLabel8))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 350, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 345, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -197,7 +210,10 @@ public class verVenta extends javax.swing.JFrame {
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jButton3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(jButton1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
 
@@ -227,6 +243,39 @@ public class verVenta extends javax.swing.JFrame {
         imprimirTicket(tab,jLabel8.getText());
         imprimirTicket(tab,jLabel8.getText());
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        if(!mode.equals("Cancelado")){
+        for (int i = 0; i < this.jTable1.getRowCount(); i++) {
+        String producto=table.getValueAt(i, 0).toString();
+        String cantidad=table.getValueAt(i, 5).toString();
+        String idProdu=table.getValueAt(i, 10).toString();
+        switch(producto){
+            case "Combo":
+                new mProductos().updateExistence("1",producto);
+                new mProductos().updateComboCancel(idProdu);
+            break;
+            case "delanteros":
+                new mProductos().updateExistence("1",producto);
+                new mProductos().updateComboCancel(idProdu);
+            break;
+            case "traseros":
+                new mProductos().updateExistence("1",producto);
+                new mProductos().updateComboCancel(idProdu);
+            break;
+            default:
+                new mProductos().updateExistence(cantidad,producto);
+                break;
+        }
+        }
+        new mVentas().updateCancel(jLabel8.getText());
+        JOptionPane.showMessageDialog(null,"Venta cancelada");
+        new Reporteador();
+        this.dispose();
+        }else{
+        JOptionPane.showMessageDialog(null,"Error, la venta ya fue cancelada anteriormente");
+        }
+    }//GEN-LAST:event_jButton2ActionPerformed
 private ArrayList loadData() {
         ArrayList data = new ArrayList();
         for (int i = 0; i < this.jTable1.getRowCount(); i++) {
@@ -239,7 +288,7 @@ private ArrayList loadData() {
             row.add(table.getValueAt(i, 5).toString());
             row.add(table.getValueAt(i, 6).toString());
             row.add(table.getValueAt(i, 7).toString());
-            row.add(table.getValueAt(i, 7).toString());
+            row.add(table.getValueAt(i, 8).toString());
             data.add(row);
         }
         return data;
@@ -251,9 +300,11 @@ jTextField3.setText(data.get(3).toString());//chofer
 jLabel5.setText(data.get(1).toString());//Usuario
 jLabel7.setText(data.get(4).toString());//Total
 jLabel8.setText(data.get(0).toString());//Folio
+mode=data.get(8).toString();//Fecha
 ArrayList tab=new mVentas().recuperarVenta(data.get(0).toString());
     for (Object o:tab) {
         ArrayList x=(ArrayList)o;
+        x.remove(0);
         table.addRow(x.toArray());
     }
 }
@@ -332,6 +383,7 @@ private void imprimirTicket(ArrayList productos, String folio) {
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

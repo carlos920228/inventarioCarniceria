@@ -176,7 +176,7 @@
                     <Column editable="true" title="Peso muerto" type="java.lang.Object"/>
                     <Column editable="true" title="Merma" type="java.lang.Object"/>
                     <Column editable="true" title="Costo" type="java.lang.Object"/>
-                    <Column editable="true" title="Cantida Producto" type="java.lang.Object"/>
+                    <Column editable="true" title="Cantida Producto" type="java.lang.Double"/>
                   </Table>
                 </Property>
                 <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">

@@ -42,7 +42,7 @@ public class mSalidas {
         Conexion conexion = new Conexion();
         conexion.conectar();
         try {
-            PreparedStatement sql = conexion.getConexion().prepareStatement("insert into productosSalida(producto,partida,kilos,piezas,merma,costo,cantidad,trf) values(?,?,?,?,?,?,?,?)");
+            PreparedStatement sql = conexion.getConexion().prepareStatement("insert into productosSalida(producto,partida,kilos,piezas,merma,costo,cantidad,trf,idpro) values(?,?,?,?,?,?,?,?,?)");
             sql.setString(1, l.get(0).toString());
             sql.setString(2, l.get(1).toString());
             sql.setString(3, l.get(2).toString());
@@ -51,6 +51,7 @@ public class mSalidas {
             sql.setString(6, l.get(5).toString());
             sql.setString(7, l.get(6).toString());
             sql.setString(8, id);
+            sql.setString(9, l.get(7).toString());
             boolean result = sql.execute();
             conexion.getConexion().close();
             return true;

@@ -32,7 +32,7 @@ public boolean insertRowSale(ArrayList l, String id) {
         Conexion conexion = new Conexion();
         conexion.conectar();
         try {
-            PreparedStatement sql = conexion.getConexion().prepareStatement("insert into pruducto_venta(producto,partida,kilos,piezas,costo,cantidad,merma,precio,subTotal,idVenta) values(?,?,?,?,?,?,?,?,?,?)");
+            PreparedStatement sql = conexion.getConexion().prepareStatement("insert into pruducto_venta(producto,partida,kilos,piezas,costo,cantidad,merma,precio,subTotal,idVenta,idPro) values(?,?,?,?,?,?,?,?,?,?,?)");
             sql.setString(1, l.get(0).toString());
             sql.setString(2, l.get(1).toString());
             sql.setString(3, l.get(2).toString());
@@ -43,6 +43,7 @@ public boolean insertRowSale(ArrayList l, String id) {
             sql.setString(8, l.get(7).toString());
             sql.setString(9, l.get(8).toString());
             sql.setString(10, id);
+            sql.setString(11,l.get(9).toString());
             boolean result = sql.execute();
             conexion.getConexion().close();
             return true;
@@ -136,6 +137,7 @@ public ArrayList recuperarVenta(String id){
    row.add(resultado.getString("precio"));
    row.add(resultado.getString("subTotal"));
    row.add(resultado.getString("mermareportada"));
+   row.add(resultado.getString("idPro"));
    data.add(row);
    }
    }catch(Exception e){
@@ -170,6 +172,20 @@ ArrayList data=new ArrayList ();
    try{
        PreparedStatement sql = conexion.getConexion().prepareStatement("update venta set descuento='"+descuento+"', estado='Pagado' where idventa='"+id+"'");
        sql.execute();
+       return true;
+   }catch(Exception e){
+       System.out.println("Error updateVentas()"+e);
+   return false;
+   } 
+}
+public boolean updateCancel(String id){
+ArrayList data=new ArrayList ();
+   Conexion conexion = new Conexion();
+   conexion.conectar();
+   try{
+       PreparedStatement sql = conexion.getConexion().prepareStatement("update venta set estado='Cancelado', total='0' where idventa='"+id+"'");
+       sql.execute();
+       conexion.getConexion().close();
        return true;
    }catch(Exception e){
        System.out.println("Error updateVentas()"+e);

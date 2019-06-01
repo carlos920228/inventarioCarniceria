@@ -446,7 +446,7 @@ private void modificarSubTotal() {
 private void loadTable(ArrayList da) {
         for (Object o : da) {
             ArrayList r = (ArrayList) o;
-            table.addRow(new Object[]{r.get(0).toString(),r.get(1).toString(),r.get(2).toString(),r.get(3).toString(),r.get(5).toString(),r.get(6).toString(),r.get(4).toString(),"0","0",r.get(7).toString()});
+            table.addRow(new Object[]{r.get(0).toString(),r.get(1).toString(),r.get(2).toString(),r.get(3).toString(),r.get(5).toString(),r.get(2).toString(),r.get(4).toString(),"0","0",r.get(7).toString()});
             total();
             partida = partida + 1;
         }
@@ -557,9 +557,21 @@ private boolean validar(){
     boolean b=true;
     for (int i = 0; i < this.jTable1.getRowCount(); i++) {
             Double d=Double.parseDouble(table.getValueAt(i, 7).toString());
-            if(d<10){
-            b=false;
+            String producto=table.getValueAt(i,0).toString();
+            Double cantidad=Double.parseDouble(table.getValueAt(i, 2).toString());
+            Double kilos=Double.parseDouble(table.getValueAt(i, 5).toString());
+            if(producto.equals("Combo")||producto.equals("traseros")||producto.equals("delanteros")){
+            
+            }else{
+                if(cantidad.compareTo(kilos)==0){
+                    
+                }else{
+                b=false;
+                }
             }
+        if(d<10){
+           b=false;
+           }
 }
 return b;
 }

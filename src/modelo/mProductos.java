@@ -82,6 +82,19 @@ conexion.conectar();
         return false;
     }
 }
+public boolean updateComboCancel(String id){
+Conexion conexion=new Conexion();
+conexion.conectar();
+    try {
+        Statement sql=conexion.getConexion().createStatement();
+        sql.executeUpdate("update partida set estado='0', numtrf=' ' where idPartida='"+id+"'");
+        conexion.getConexion().close();
+        return true;
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(null,"Error al afectar existencias,enviar foto a sistemas: "+e);
+        return false;
+    }
+}
 public ArrayList existencia(){
 Conexion conexion=new Conexion();
 conexion.conectar();
@@ -101,5 +114,45 @@ ArrayList data=new ArrayList();
         System.out.println("Error consulta inventario: "+e);
     }
 return data;
+}
+/**
+ * Método que devuelve un arreglo con la lista de los productos por debajo del mínimo
+ * @return 
+ */
+public ArrayList orderPurchase(){
+Conexion conexion=new Conexion();
+conexion.conectar();
+ArrayList data=new ArrayList();
+    try {
+        Statement sql=conexion.getConexion().createStatement();
+        ResultSet resultado=sql.executeQuery("select descripcion, format(exitencia,2) as exi, min from Productos where exitencia<min and min>0 order by descripcion");
+        while(resultado.next()){
+        ArrayList row=new ArrayList();
+        row.add(resultado.getString("descripcion"));
+        row.add(resultado.getString("exi"));
+        row.add(resultado.getString("min"));
+        data.add(row);
+        }
+        conexion.getConexion().close();
+    } catch (Exception e) {
+        System.out.println("Error consulta inventario: "+e);
+    }
+return data;
+}
+
+public String countMin(){
+Conexion conexion=new Conexion();
+conexion.conectar();
+String total="0";
+    try {
+        Statement sql=conexion.getConexion().createStatement();
+        ResultSet resultado=sql.executeQuery("select count(descripcion) as total from Productos where exitencia<min and min>0");
+        resultado.next();
+        total=resultado.getString("total");
+        conexion.getConexion().close();
+    } catch (Exception e) {
+        System.out.println("Error consulta inventario: "+e);
+    }
+return total;
 }
 }

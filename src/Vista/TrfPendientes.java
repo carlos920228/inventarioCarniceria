@@ -284,7 +284,7 @@ private void loadCompany() {
             }
         });
         trsfiltro = new TableRowSorter(tabla);
-        jTable1.setRowSorter(trsfiltro);
+        //jTable1.setRowSorter(trsfiltro);
     }//GEN-LAST:event_jTextField1KeyTyped
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
