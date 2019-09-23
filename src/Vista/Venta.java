@@ -446,7 +446,7 @@ private void modificarSubTotal() {
 private void loadTable(ArrayList da) {
         for (Object o : da) {
             ArrayList r = (ArrayList) o;
-            table.addRow(new Object[]{r.get(0).toString(),r.get(1).toString(),r.get(2).toString(),r.get(3).toString(),r.get(5).toString(),r.get(2).toString(),r.get(4).toString(),"0","0",r.get(7).toString()});
+            table.addRow(new Object[]{r.get(0).toString(),r.get(1).toString(),r.get(2).toString(),r.get(3).toString(),r.get(5).toString(),"1",r.get(4).toString(),"0","0",r.get(7).toString()});
             total();
             partida = partida + 1;
         }

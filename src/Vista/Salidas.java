@@ -319,7 +319,26 @@ public class Salidas extends javax.swing.JFrame {
         jLabel9.setText("0.0");
         partida=1;
     }
-
+    private int validar(){
+         ArrayList data = new ArrayList();
+         int error=0;
+        for (int i = 0; i < this.jTable1.getRowCount(); i++) {
+            
+            String producto=table.getValueAt(i, 0).toString();
+            String kilos=table.getValueAt(i, 2).toString();
+            String cantidad=table.getValueAt(i, 6).toString();
+            if(producto.equals("Combo")||producto.equals("traseros")||producto.equals("delanteros")){
+                if(cantidad.equals("1")||cantidad.equals("1.0")){
+                    
+                }else{error=1;}
+            }else{
+            if(!cantidad.equals(kilos)){
+                error=1;
+            }
+            }
+        }
+        return error;
+    }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -567,9 +586,11 @@ public class Salidas extends javax.swing.JFrame {
             partida = partida + 1;
         }
     }//GEN-LAST:event_jComboBox4KeyTyped
-
+    
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        saveRowsTrf();
+        if(validar()==1){
+        JOptionPane.showMessageDialog(null,"Error, favor de verificar cantidades y kilos :)");
+        }else{saveRowsTrf();}
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed

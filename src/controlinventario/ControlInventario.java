@@ -36,5 +36,6 @@ public class ControlInventario {
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(Menu.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        Acceso inicio=new Acceso();
+        Acceso inicio=new Acceso(); //Bodega
+        //Menu m=new Menu();
 }}

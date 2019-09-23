@@ -28,7 +28,7 @@ public class mRepartidor {
     }
     public ArrayList listRepartidores() {
         ArrayList data = new ArrayList();
-        Conexion conexion = new Conexion();
+        ConexionLocal conexion = new ConexionLocal();
         conexion.conectar();
         try {
             Statement sql = conexion.getConexion().createStatement();

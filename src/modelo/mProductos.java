@@ -26,7 +26,7 @@ conexion.conectar();
  * @return ArrayList con la lista de productos [id,name]
  */
 public ArrayList<ArrayList> productList(){
-Conexion conexion=new Conexion();
+ConexionLocal conexion=new ConexionLocal();
 conexion.conectar();
 ArrayList<ArrayList> data=new ArrayList();
     try {
@@ -125,7 +125,7 @@ conexion.conectar();
 ArrayList data=new ArrayList();
     try {
         Statement sql=conexion.getConexion().createStatement();
-        ResultSet resultado=sql.executeQuery("select descripcion, format(exitencia,2) as exi, min from Productos where exitencia<min and min>0 order by descripcion");
+        ResultSet resultado=sql.executeQuery("select descripcion, format(exitencia,2) as exi, min from Productos where CAST(exitencia AS SIGNED)<=min and min > 0 order by descripcion");
         while(resultado.next()){
         ArrayList row=new ArrayList();
         row.add(resultado.getString("descripcion"));
@@ -146,7 +146,7 @@ conexion.conectar();
 String total="0";
     try {
         Statement sql=conexion.getConexion().createStatement();
-        ResultSet resultado=sql.executeQuery("select count(descripcion) as total from Productos where exitencia<min and min>0");
+        ResultSet resultado=sql.executeQuery("select count(descripcion) as total from Productos where CAST(exitencia AS SIGNED)<min and min>0");
         resultado.next();
         total=resultado.getString("total");
         conexion.getConexion().close();
